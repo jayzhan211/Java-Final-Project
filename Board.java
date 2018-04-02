@@ -1,12 +1,15 @@
 package game;
 
-public class Board {
-	int[][] board=new int[8][8];
-	public Board(Board a) {
-		this.board=a.board;
+import javafx.scene.layout.Pane;
+
+public class Board extends Pane{
+	public Board(){
+		//black-first
+		currentPlayer=1;
+		nextPlayer=0;
+		
 	}
-	public Board(int [][]a) {
-		this.board=a;
-	}
-	public Board(){}
+	private int currentPlayer;
+	private int nextPlayer;
+	private S
 }
