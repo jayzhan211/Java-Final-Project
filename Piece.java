@@ -16,12 +16,16 @@ public class Piece extends Group{
 		piece=new Ellipse();
 		piece.getTransforms().add(t);
 		setpiece(player);
+		getChildren().add(piece);
 	}
+	
+		
+	
 	public void setpiece(int player) {
-		if(player==-1) {
+		if(player==0) {
 			piece.setFill(Color.TRANSPARENT);
 		}
-		else if(player==0) {
+		else if(player==1) {
 			piece.setFill(Color.WHITE);
 		}
 		else {
