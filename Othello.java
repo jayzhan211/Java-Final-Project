@@ -1,47 +1,44 @@
 package game;
-import javax.swing.*;
-import java.awt.*;
-import java.net.*;
 
-public class Othello extends JFrame{
-	public static void main(String[] args) {
-		Othello othello=new Othello();
-		othello.showframe();
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+public class Othello extends Application{
+	private StackPane root;
+	private Gamecontroll gc;
+	private Button startbutton;
+	
+	public void init() {
+		startbutton=new Button();
+		startbutton.setText("Start");
+		startbutton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println("Hello JavaFX!");
+			}
+			
+			
+		});
+		root=new StackPane();
+		gc=new Gamecontroll();
+		root.getChildren().add(gc);
+		root.getChildren().add(startbutton);
 	}
-	public void showframe() {
-		//game interface
-		JPanel gamejp=new JPanel();
-		//game button
-		JPanel buttonjp=new JPanel();
-		
-		//Button
-		
-		
-		ImageIcon aIcon=new ImageIcon("images/TK.jpg");
-		ImageIcon bIcon=new ImageIcon("images/TK.jpg");
-		JButton button=new JButton(aIcon);
-		button.setRolloverIcon(bIcon);
-		button.setPressedIcon(bIcon);
-		Dimension sz=new Dimension(1000, 1000);
-		button.setPreferredSize(sz);
-		//New start
-		ImageIcon img=new ImageIcon("images/TK.jpg");
-		JButton startbutton=new JButton(img);
-		startbutton.setPreferredSize(new Dimension(100, 400));
-		buttonjp.add(button);
-		buttonjp.add(startbutton);
-		
-		this.setLayout(new GridLayout(1,2,100, 0));  
-		this.add(gamejp);
-		this.add(buttonjp);
-		this.setTitle("Othello");
-		this.setResizable(true);
-		this.setSize(1000,650);
-		this.setLocationRelativeTo(null); 
-		this.setDefaultCloseOperation(3);  
-		this.setVisible(true);
-		
-		
-		
-	}
+	@Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Othello");
+        primaryStage.setScene(new Scene(root, 800, 800));
+        primaryStage.setResizable(true);
+        primaryStage.show();
+        
+    }
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
