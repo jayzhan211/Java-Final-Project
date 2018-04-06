@@ -2,7 +2,7 @@
 
 ## Othello 
 
-#Finish
+Finish
 
 1.Board
 
@@ -12,7 +12,7 @@
 
 4.PvP
 
-#in_queue
+in_queue
 
 1.Label -Scor,cur_player
 
