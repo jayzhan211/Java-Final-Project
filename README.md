@@ -1,6 +1,8 @@
-# Java-Final-Project
+### Java-Final-Project
 
-# Othello 
+## Othello 
+
+#Finish
 
 1.Board
 
@@ -10,7 +12,7 @@
 
 4.PvP
 
-in queue
+#in_queue
 
 1.Label -Scor,cur_player
 
