@@ -3,7 +3,7 @@ package game;
 import java.security.KeyStore.PrivateKeyEntry;
 import java.util.*;
 
-	
+
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -88,12 +88,7 @@ public class Board extends Pane{
 		
 		//board_state[0][2][2].setpiece(2);
 		
-		//white
-		board[3][3].setpiece(1);
-		board[4][4].setpiece(1);
-		//black
-		board[3][4].setpiece(2);
-		board[4][3].setpiece(2);
+		
 		
 		//board[3][3].setVisible(false);
 		
@@ -112,13 +107,6 @@ public class Board extends Pane{
 		board[0][0].setpiece(2);
 		System.out.println(board_state[0][0][0].getpiece());*/
 		
-		
-		for(int i=0;i<8;i++)
-			for(int j=0;j<8;j++) {
-				
-				board_state[0][i][j].setpiece(board[i][j].getpiece());
-			}
-		
 		/*for(int i=0;i<8;i++) {
 			for(int j=0;j<8;j++) {
 				System.out.print(board_state[0][i][j].getpiece());
@@ -128,27 +116,35 @@ public class Board extends Pane{
 	}
 	public void previous_move() {
 		
-		if(cur_state==0)return ;
-		cur_state--;
-		
-		System.out.println(cur_state);
-		
-		/*for(int i=0;i<8;i++) {
-			for(int j=0;j<8;j++) {
-				board[i][j]=board_state[cur_state][i][j];
-				System.out.print(board[i][j].getpiece());
-
-			}
-			System.out.println("");
-		}*/
-		
-		for(int i=0;i<8;i++) {
-			for(int j=0;j<8;j++) {
-				System.out.print(board_state[0][i][j].getpiece());
-			}
-			System.out.println("");
+		if(cur_state>0) {
+			cur_state--;
+			
+			//System.out.println(cur_state);
+			
+			/*for(int i=0;i<8;i++) {
+				for(int j=0;j<8;j++) {
+					board[i][j]=board_state[cur_state][i][j];
+					System.out.print(board[i][j].getpiece());
+	
+				}
+				System.out.println("");
+			}*/
+			for(int i=0;i<8;i++)
+				for(int j=0;j<8;j++) {
+					board[i][j].setpiece(board_state[cur_state][i][j].getpiece());
+					
+				}
+			swapPlayer();
+			updatescore();
+			
+			/*for(int i=0;i<8;i++) {
+				for(int j=0;j<8;j++) {
+					System.out.print(board_state[0][i][j].getpiece());
+				}
+				System.out.println("");
+			}*/
 		}
-		
+		System.out.println(cur_state);
 	}
 	
 	private void reset_board() {
@@ -158,9 +154,21 @@ public class Board extends Pane{
 			for(int j=0;j<8;j++) {
 				
 				board[i][j].setpiece(0);
-				
+				board_state[0][i][j].setpiece(0);
 			}
-				
+		//white
+		board[3][3].setpiece(1);
+		board[4][4].setpiece(1);
+		//black
+		board[3][4].setpiece(2);
+		board[4][3].setpiece(2);
+		
+		board_state[0][3][3].setpiece(1);
+		board_state[0][4][4].setpiece(1);
+		//black
+		board_state[0][3][4].setpiece(2);
+		board_state[0][4][3].setpiece(2);	
+		
 		//board[2][2].setpiece(0);
 		//board[2][2].setpiece(2);
 		
@@ -168,7 +176,7 @@ public class Board extends Pane{
 	
 	
 	public void placePiece(double x,double y) {
-		cur_state++;
+		
 		//System.out.print(x+" "+y);
 		
 		/*for(int i=0;i<8;i++) {
@@ -200,24 +208,26 @@ public class Board extends Pane{
         
         if(!determinevalidmove(cellx,celly))return ;
 		
-        for(int i=0;i<8;i++) {
-			for(int j=0;j<8;j++) {
-				System.out.print(board_state[0][i][j].getpiece());
-			}
-			System.out.println("");
-		}
+        cur_state++;
         
-        System.out.println(board_state[0][cellx][celly].getpiece());
-        board[cellx][celly].setpiece(currentPlayer);
-        System.out.println(board_state[0][cellx][celly].getpiece());
-
-
-        for(int i=0;i<8;i++) {
+        /*for(int i=0;i<8;i++) {
 			for(int j=0;j<8;j++) {
 				System.out.print(board_state[0][i][j].getpiece());
 			}
 			System.out.println("");
-		}
+		}*/
+        
+       /* System.out.println(board_state[0][cellx][celly].getpiece());
+        board[cellx][celly].setpiece(currentPlayer);
+        System.out.println(board_state[0][cellx][celly].getpiece());*/
+
+
+       /* for(int i=0;i<8;i++) {
+			for(int j=0;j<8;j++) {
+				System.out.print(board_state[0][i][j].getpiece());
+			}
+			System.out.println("");
+		}*/
         
         
         for(int i=0;i<8;i++)
@@ -241,10 +251,11 @@ public class Board extends Pane{
         
         
         
-        System.out.println(cur_state);
+       // System.out.println(cur_state);
+        
         for(int i=0;i<8;i++)
 			for(int j=0;j<8;j++)
-				board_state[cur_state][i][j]=board[i][j];
+				board_state[cur_state][i][j].setpiece(board[i][j].getpiece());
         
         /*for(int i=0;i<8;i++) {
 			for(int j=0;j<8;j++) {
@@ -338,10 +349,10 @@ public class Board extends Pane{
 					can_verse[tx][ty]=true;
 					//System.out.println(tx+" "+ty);
 				}
-				if(!isvalid) {
+				/*if(!isvalid) {
 					System.out.println("放置點:"+x+" "+y);
 					System.out.println("方向:"+way[0]+" "+way[1]);
-				}
+				}*/
 				isvalid=true;
 			}
 		//	System.out.println(isvalid);
