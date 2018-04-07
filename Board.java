@@ -266,7 +266,6 @@ public class Board extends Pane{
 		
 		return isvalid;
 	}
-	//System.out.println("");
 	private void initbackground() {
 		
         getChildren().addAll(background);
@@ -336,7 +335,6 @@ public class Board extends Pane{
 	                board[i][j].resize(cell_width, cell_height);
 	                board[i][j].relocate(i * cell_width, j * cell_height);
 	            }
-	        
 	    }
 	public void horizontalResizeRelocate(double width) {
         for(int i = 0; i < 8; i++) {
@@ -350,6 +348,5 @@ public class Board extends Pane{
             vertical_t[i].setX((i + 1) * cell_width);
             vertical[i].setEndY(height);
         }
-
     }
 }
