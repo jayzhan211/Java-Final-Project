@@ -1,9 +1,11 @@
 package game;
 
 import java.security.KeyStore.PrivateKeyEntry;
-import java.time.Duration;
 import java.util.*;
+
+import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
+import javafx.animation.SequentialTransition;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
@@ -12,8 +14,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Translate;
 import javafx.scene.transform.Rotate;
-import javafx.util.Pair;
-
+import javafx.util.*;
 //Black 2- White 1
 public class Board extends Pane{
 	
@@ -35,6 +36,8 @@ public class Board extends Pane{
     private int cur_state;
     private boolean[][] can_verse;
     private int[][] direction = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+    private int flip_duration=500;
+    private Duration Flip_duration;
     
 	public Board(){
 		currentPlayer=2;
@@ -48,6 +51,8 @@ public class Board extends Pane{
         can_verse=new boolean[8][8];
         board_state=new Piece[64][8][8];
         cur_state=0;
+        Flip_duration=Duration.millis(flip_duration);
+        
         initbackground();
         initboard();
         resetGame();
@@ -120,13 +125,40 @@ public class Board extends Pane{
 		
         cur_state++;
         //update_board
+        board[cellx][celly].setpiece(currentPlayer);
+        
+        
+      //  System.out.println(cellx+" "+celly);
         
         for(int i=0;i<8;i++)
         	for(int j=0;j<8;j++)
         		if(can_verse[i][j]) {
-        			board[i][j].setpiece(currentPlayer);
+        			if(i==cellx&&y==celly)continue;
+        			
+        			System.out.println(i+" "+j);
+        			
+        			Piece tmp=board[i][j];
+        			
+        			RotateTransition firstRotator = new RotateTransition(Flip_duration, tmp);
+                    firstRotator.setAxis(Rotate.Y_AXIS);
+                    firstRotator.setFromAngle(0);
+                    firstRotator.setToAngle(90);
+                    //firstRotator.setInterpolator(Interpolator.EASE_BOTH);
+                    
+                    tmp.setpiece(currentPlayer);
+ 
+                    
+                    RotateTransition secondRotator = new RotateTransition(Flip_duration, tmp);
+                    secondRotator.setAxis(Rotate.Y_AXIS);
+                    secondRotator.setFromAngle(90);
+                    secondRotator.setToAngle(180);
+                    //secondRotator.setInterpolator(Interpolator.EASE_BOTH);
+
+                    new SequentialTransition(firstRotator, secondRotator).play();
+        			
+        				
         		}
-        
+       
         swapPlayer();
         updatescore();
         checkgameEnd();
@@ -192,24 +224,20 @@ public class Board extends Pane{
 			if(!in_board(tx, ty))continue;
 			int cnt=0;
 			while(in_board(tx, ty)&&board[tx][ty].getpiece()==nextPlayer) {
-				
-		
 				tx+=way[0];
 				ty+=way[1];
 				cnt++;
 			}
-			
-			
-			
 			if(in_board(tx, ty)&&board[tx][ty].getpiece()==currentPlayer&&cnt>0) {
 			
-				
+				tx-=way[0];
+				ty-=way[1];
 				while(tx!=x||ty!=y) {
+					can_verse[tx][ty]=true;
 					tx-=way[0];
 					ty-=way[1];
-					can_verse[tx][ty]=true;
-					
 				}
+				
 				
 				isvalid=true;
 			}
