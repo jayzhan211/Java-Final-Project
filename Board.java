@@ -6,6 +6,8 @@ import java.util.*;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
@@ -68,6 +70,12 @@ public class Board extends Pane{
 		cur_state=0;
 	}
 	public void previous_move() {
+		
+		//System.out.println(cur_state);
+		
+		
+		
+		
 		if(cur_state>0) {
 			cur_state--;
 			for(int i=0;i<8;i++)
@@ -135,30 +143,41 @@ public class Board extends Pane{
         		if(can_verse[i][j]) {
         			if(i==cellx&&y==celly)continue;
         			
-        			System.out.println(i+" "+j);
         			
         			Piece tmp=board[i][j];
+        			Piece tmp2=board_state[cur_state][i][j];
         			
         			RotateTransition firstRotator = new RotateTransition(Flip_duration, tmp);
                     firstRotator.setAxis(Rotate.Y_AXIS);
                     firstRotator.setFromAngle(0);
                     firstRotator.setToAngle(90);
-                    //firstRotator.setInterpolator(Interpolator.EASE_BOTH);
+                    firstRotator.setInterpolator(Interpolator.LINEAR);
                     
-                    tmp.setpiece(currentPlayer);
- 
+
                     
+                    firstRotator.setOnFinished(e->{
+                    		tmp.setpiece(nextPlayer);
+                    		tmp2.setpiece(tmp.getpiece());
+                    	}
+                    );
+                    	
+                    	
+                   
                     RotateTransition secondRotator = new RotateTransition(Flip_duration, tmp);
                     secondRotator.setAxis(Rotate.Y_AXIS);
                     secondRotator.setFromAngle(90);
                     secondRotator.setToAngle(180);
-                    //secondRotator.setInterpolator(Interpolator.EASE_BOTH);
+                    secondRotator.setInterpolator(Interpolator.LINEAR);
 
+
+                    //SequentialTransition controller =new SequentialTransition(firstRotator, secondRotator);
+                   // controller.play();
                     new SequentialTransition(firstRotator, secondRotator).play();
-        			
-        				
+                    
+                    board[i][j]=tmp;
+                    
         		}
-       
+        
         swapPlayer();
         updatescore();
         checkgameEnd();
@@ -166,6 +185,7 @@ public class Board extends Pane{
         for(int i=0;i<8;i++)
 			for(int j=0;j<8;j++)
 				board_state[cur_state][i][j].setpiece(board[i][j].getpiece());
+       // System.out.println("666");
 	}
 	private void findWinner() {
 		if(B_score>W_score) 
