@@ -42,5 +42,4 @@ public class Gamecontroll extends Control{
         super.resize(width, height);
         board.resize(width, height);
     }
-	
 }
