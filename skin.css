@@ -1,6 +1,6 @@
 .pvc_skin{
-	
-	-fx-background-color:#383838;
+	-fx-background-image: url("TK.jpg");
+	/*-fx-background-color:#383838;*/
 	-fx-font-size:11pt;
 }
 .pvp_skin{

@@ -62,7 +62,7 @@ public class Othello extends Application{
 		
 		pvp_pane.getChildren().add(gamecontroll);
 		
-		//pvc_pane.getStylesheets().add(getClass().getResource("pvc_paneskin.css").toExternalForm());
+		
 		
 		pvc_pane.getStyleClass().add("pvc_skin");
 

@@ -39,7 +39,7 @@ public class Piece extends Group{
         super.resize(width, height);
 
         piece.setCenterX(width / 2);
-        piece.setCenterY(width / 2);
+        piece.setCenterY(height / 2);
 
         piece.setRadiusX(width / 2);
         piece.setRadiusY(height / 2);
