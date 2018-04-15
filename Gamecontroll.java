@@ -11,26 +11,32 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 public class Gamecontroll extends Control{
-	private Board board;
+	private Board_Controll board;
 	
+	private Board_Beta B1;
 		
 	public Gamecontroll(){
 		
 		setSkin(new Boardskin(this));
 		
 		
-		board=new Board();
-		getChildren().add(board);
 		
 		
 		
-		//System.out.println("66ssa6");
+		//board=new Board_Controll();
+		//getChildren().add(board);
+		
+		
+		B1=new Board_Beta(100);
+		//B1=new Board_Beta();
+		getChildren().add(B1);
+		
 		
 		setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-            	
-                board.placePiece(event.getX(), event.getY());
+            	B1.placePiece(event.getX(), event.getY());
+                //board.placePiece(event.getX(), event.getY());
                 
             }
             
@@ -44,14 +50,14 @@ public class Gamecontroll extends Control{
             	
                 if(event.getCode() == KeyCode.R) {
                 	
-                	
-                    board.previous_move();
+                	B1.previous_move();
+                   // board.previous_move();
                 }
                 else if(event.getCode() == KeyCode.SPACE) {
                 	
                 	
-                	
-                    board.resetGame();
+                	B1.resetGame();
+                    //board.resetGame();
                 }
                 
                 
@@ -64,13 +70,13 @@ public class Gamecontroll extends Control{
 
 		
 	}
-	public void resize(double width, double height) {
+	/*public void resize(double width, double height) {
 		//System.out.println("--999");
         super.resize(width, height);
         
        // System.out.println("01119");
         
-        board.resize(width, height);
+        //board.resize(width, height);
         
         
         
