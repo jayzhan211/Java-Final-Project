@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -64,6 +66,10 @@ public class Othello extends Application{
 		
 		
 		
+		//pvp_pane.getChildren().add(new Board_Controll());
+		
+		
+		
 		pvc_pane.getStyleClass().add("pvc_skin");
 
 		
@@ -85,10 +91,10 @@ public class Othello extends Application{
 		
 		
 
-		return_button.setTranslateX(-320);
+		return_button.setTranslateX(-window_height/2.5);
 		return_button.setTranslateY(-360);
 		return_button.setScaleX(1.3);
-		
+		//return_button.setAlignment(Pos.TOP_LEFT);
 
 		
 		go_to_pvp.setTranslateX(0);
@@ -119,6 +125,7 @@ public class Othello extends Application{
 		
         primaryStage.setTitle("Othello");
         primaryStage.setScene(start_scene);
+        
         startButton.setOnAction(e->{
         	primaryStage.setScene(choose_scene);
 			
@@ -136,14 +143,28 @@ public class Othello extends Application{
 			
 		});
         
+        
+        
         primaryStage.setResizable(true);
 
         primaryStage.show();
+		
+		
+		
+		
+		/*try {
+			Parent root=FXMLLoader.load(getClass().getResource("A.fxml"));
+	    
+	        Scene scene = new Scene(root);
+	        primaryStage.setScene(scene);
+	        primaryStage.show();
+		}
+		catch (Exception e) {
+			 e.printStackTrace();
+		}*/
+		
         
     }
-	public void stop() {
-		
-	}
     public static void main(String[] args) {
         launch(args);
     }

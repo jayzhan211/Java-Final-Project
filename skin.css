@@ -1,9 +1,7 @@
 .pvc_skin{
-	
-	-fx-height:700
-	-fx-background-image:
-	linear-gradient(45deg, black 25%, transparent 0, transparent 75%, black 0), linear-gradient(45deg, black 25%, transparent 0, transparent 75%, black 0)
-
+	-fx-background-image: url("TK.jpg");
+	/*-fx-background-color:#383838;*/
+	-fx-font-size:11pt;
 }
 .pvp_skin{
 	-fx-background-color:#215802;
