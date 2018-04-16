@@ -18,8 +18,8 @@ public class Piece_beta extends Circle{
         this.player = type;
         setFill(type.getColor());
     }
-	
-    
+
+
 }
 enum PieceType {
     NONE,
