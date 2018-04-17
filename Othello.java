@@ -1,3 +1,4 @@
+package game;
 
 
 import java.awt.image.TileObserver;
@@ -42,6 +43,7 @@ public class Othello extends Application{
 	private StackPane pvp_pane;
 	private StackPane choose_pane;
 	private StackPane pvc_pane;
+	private StackPane pvc_beta_pane;
 
 	private Button startButton;
 	private Button return_button;
@@ -49,6 +51,7 @@ public class Othello extends Application{
 	private Button go_to_pvp;
 	//player vs computer
 	private Button go_to_pvc;
+	private Button go_to_pvc_beta;
 
 	private Label game_title;
 
@@ -56,13 +59,15 @@ public class Othello extends Application{
 	private Scene choose_scene;
 	private Scene pvp_scene;
 	private Scene pvc_scene;
+	private Scene pvc_beta_scene;
 
 	private int window_height=800;
 	private int window_width=800;
 	private int board_size=800;
 
-	private Board_Beta pvc_board;
+	private Board_PvC pvc_board;
 	private Board_Beta pvp_board;
+	private Board_pvc_beta pvc_beta_board;
 
 	private int Square_size=60;
 
@@ -72,14 +77,16 @@ public class Othello extends Application{
 		start_pane = new StackPane();
 		pvp_pane=new StackPane();
 		pvc_pane=new StackPane();
+		pvc_beta_pane=new StackPane();
 		choose_pane=new StackPane();
 
 		pvp_board=new Board_Beta(Square_size);
 		pvc_board=new Board_PvC(Square_size);
-
+		pvc_beta_board=new Board_pvc_beta(Square_size);
 
 		pvp_pane.getChildren().add(pvp_board);
 		pvc_pane.getChildren().add(pvc_board);
+		pvc_beta_pane.getChildren().add(pvc_beta_board);
 
 		//pvp_pane.getChildren().add(new Gamecontroll());
 		//pvc_pane.getChildren().add(new Gamecontroll(2,board_size));
@@ -88,6 +95,7 @@ public class Othello extends Application{
 		return_button=new Button("Return");
 		go_to_pvp=new Button("Player vs Player");
 		go_to_pvc=new Button("Player vs Computer");
+		go_to_pvc_beta=new Button("Beta Zone");
 
 		game_title=new Label("Othello");
 
@@ -109,17 +117,18 @@ public class Othello extends Application{
 		go_to_pvp.setTranslateX(0);
 		go_to_pvp.setTranslateY(-50);
 
-
+		go_to_pvc_beta.setTranslateX(100);
+		go_to_pvc_beta.setTranslateY(100);
 
 		startButton.setFont(new Font("Fleisch",14));
 		startButton.setMaxSize(60, 40);
 
 
-		choose_pane.getChildren().addAll(return_button,go_to_pvc,go_to_pvp);
+		choose_pane.getChildren().addAll(return_button,go_to_pvc,go_to_pvp,go_to_pvc_beta);
+		//choose_pane.getChildren().addAll(return_button,go_to_pvc,go_to_pvp);
 
 
-
-
+		pvc_beta_scene=new Scene(pvc_beta_pane,window_width,window_height);
 		pvc_scene=new Scene(pvc_pane,window_width, window_height);
 		pvp_scene=new Scene(pvp_pane,window_width, window_height);
         start_scene=new Scene(start_pane,window_width, window_height);
@@ -154,7 +163,21 @@ public class Othello extends Application{
                 }
             }
         });
+		pvc_beta_scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getCode() == KeyCode.R) {
 
+                	pvc_beta_board.previous_move();
+                	pvc_beta_board.previous_move();
+
+                }
+                else if(event.getCode() == KeyCode.SPACE) {
+                	//System.out.println("123");
+                	pvc_beta_board.resetGame();
+                }
+            }
+        });
 	}
 
 
@@ -178,6 +201,10 @@ public class Othello extends Application{
 		});
         go_to_pvc.setOnAction(e->{
         	primaryStage.setScene(pvc_scene);
+
+		});
+        go_to_pvc_beta.setOnAction(e->{
+        	primaryStage.setScene(pvc_beta_scene);
 
 		});
 
