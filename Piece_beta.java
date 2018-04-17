@@ -1,4 +1,4 @@
-package game;
+
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -18,8 +18,8 @@ public class Piece_beta extends Circle{
         this.player = type;
         setFill(type.getColor());
     }
-	
-    
+
+
 }
 enum PieceType {
     NONE,
