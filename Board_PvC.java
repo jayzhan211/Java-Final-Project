@@ -1,5 +1,4 @@
 package game;
-
 import java.awt.Robot;
 
 import javafx.scene.input.MouseEvent;
@@ -59,9 +58,7 @@ public class Board_PvC extends Board_Beta{
 				});
 			}
 	}
-	public void computer_turn() {
-		System.out.println("123");
-		System.out.println("zzz11");
+
 		Timeline timeline=new Timeline(new KeyFrame(Duration.millis(Computer_delay), e->{
 
 

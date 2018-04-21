@@ -205,7 +205,6 @@ public class Othello extends Application{
 		});
         go_to_pvc_beta.setOnAction(e->{
         	primaryStage.setScene(pvc_beta_scene);
-        	
 
 		});
 
