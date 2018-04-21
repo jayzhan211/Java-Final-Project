@@ -1,11 +1,13 @@
 package game;
 
-
-
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -47,7 +49,6 @@ public class Board_Beta extends GridPane{
 		board=new Piece_beta[8][8];
 		board_state=new Piece_beta[64][8][8];
 		Square=new Pane[8][8];
-
 		this.Board_Size=Board_Size;
 		this.flipDuration= Duration.millis(flip_duration);
 
@@ -58,17 +59,10 @@ public class Board_Beta extends GridPane{
 
 		for(int i=0;i<8;i++)
 			for(int j=0;j<8;j++) {
-
-
-
 				Square[i][j]=new Pane();
 				board[i][j]=new Piece_beta(Board_Size, PieceType.NONE);
 				Square[i][j].setStyle("-fx-background-color: " + background_color + ";");
 				Square[i][j].getChildren().add(board[i][j]);
-
-				//getChildren().add(board[i][j]);
-				//getChildren().add(Square[i][j]);
-
 				add(Square[i][j],i,j);
 
 			}
@@ -77,7 +71,7 @@ public class Board_Beta extends GridPane{
 				for(int j=0;j<8;j++) {
 
 					board_state[k][i][j]=new Piece_beta(Board_Size, PieceType.NONE);
-					//getChildren().add(board_state[k][i][j]);
+					//Square[i][j].getChildren().add(board_state[k][i][j]);
 				}
 
 
@@ -95,72 +89,45 @@ public class Board_Beta extends GridPane{
 		setAlignment(Pos.CENTER);
 
 		resetGame();
+		placepiece();
+
+
 	}
+	public void placepiece() {
+		for(int i=0;i<8;i++)
+			for(int j=0;j<8;j++) {
+				final int f_i=i,f_j=j;
+				final Piece_beta currentplayer=board[i][j];
+				Square[i][j].setOnMouseClicked(e->{
+					if(!in_play)return ;
+					if(currentplayer.getType()==PieceType.NONE&&in_board(f_i, f_j)) {
+						for(int ti=0;ti<8;ti++)
+					        for(int tj=0;tj<8;tj++) {
+				        		can_verse[ti][tj]=false;
+				        	}
 
-	public void placePiece(double x,double y) {
-		final int cellx = (int) (x / Board_Size);
-        final int celly = (int) (y / Board_Size);
+						if(!determinevalidmove(f_i, f_j))return ;
 
-        //System.out.println(cellx+" "+celly);
-        //EndGmae
-        if(!in_play)return ;
-        //Have Piece
-        if(!in_board(cellx, cellx))return;
-        if(board[cellx][celly].getType()!=PieceType.NONE) return ;
+						cur_state++;
 
-        //System.out.println(cellx+" "+celly);
-       // System.out.println(cellx+" "+celly);
-        for(int i=0;i<8;i++)
-        	for(int j=0;j<8;j++) {
-        		System.out.println(123);
-        		can_verse[i][j]=false;
+						board[f_i][f_j].setType(currentPlayer);
+						flip(f_i,f_j);
 
-        	}
-       // System.out.println(cellx+" "+celly);
-        if(!determinevalidmove(cellx,celly))return ;
-       // System.out.println(cellx+" "+celly);
-        cur_state++;
-        //update_board
-        board[cellx][celly].setType(currentPlayer);
+						swapPlayer();
+						updatescore();
+						checkgameEnd();
+				        if(!in_play)findWinner();
+				        for(int ti=0;ti<8;ti++)
+					        for(int tj=0;tj<8;tj++)
+								board_state[cur_state][ti][tj].setType(board[ti][tj].getType());
+				        System.out.println("cur"+cur_state);
+					}
 
-       // System.out.println(cellx+" "+celly);
-      //  System.out.println(cellx+" "+celly);
 
-        /*for(int i=0;i<8;i++)
-        	for(int j=0;j<8;j++)
-        		if(can_verse[i][j]) {
-        			if(i==cellx&&y==celly)continue;
-        			Piece_beta tmp=board[i][j];
-        			Piece_beta tmp2=board_state[cur_state][i][j];
-        			RotateTransition firstRotator = new RotateTransition(flipDuration, tmp);
-                    firstRotator.setAxis(Rotate.Y_AXIS);
-                    firstRotator.setFromAngle(0);
-                    firstRotator.setToAngle(90);
-                    firstRotator.setInterpolator(Interpolator.LINEAR);
-                    firstRotator.setOnFinished(e->{
-                    		tmp.setType(nextPlayer);
-                    		tmp2.setType(tmp.getType());
-                    	}
-                    );
-                    RotateTransition secondRotator = new RotateTransition(flipDuration, tmp);
-                    secondRotator.setAxis(Rotate.Y_AXIS);
-                    secondRotator.setFromAngle(90);
-                    secondRotator.setToAngle(180);
-                    secondRotator.setInterpolator(Interpolator.LINEAR);
-                    //SequentialTransition controller =new SequentialTransition(firstRotator, secondRotator);
-                   // controller.play();
-                    new SequentialTransition(firstRotator, secondRotator).play();
-                    board[i][j]=tmp;
-        		}*/
-        flip(cellx,celly);
-        swapPlayer();
-        updatescore();
-        checkgameEnd();
-        if(!in_play)findWinner();
-        for(int i=0;i<8;i++)
-			for(int j=0;j<8;j++)
-				board_state[cur_state][i][j].setType(board[i][j].getType());
-       // System.out.println("666");
+				});
+			}
+
+
 	}
 	protected void flip(int cellx,int celly) {
 		for(int i=0;i<8;i++)
@@ -181,7 +148,7 @@ public class Board_Beta extends GridPane{
 
 
                     firstRotator.setOnFinished(e->{
-
+                    		//setonfinish do on the last,therefore the player change before this,so set nextplayer
                     		tmp.setType(nextPlayer);
                     		tmp2.setType(tmp.getType());
                     	}
@@ -194,13 +161,9 @@ public class Board_Beta extends GridPane{
                     secondRotator.setFromAngle(90);
                     secondRotator.setToAngle(180);
                     secondRotator.setInterpolator(Interpolator.LINEAR);
-
-
-                    //SequentialTransition controller =new SequentialTransition(firstRotator, secondRotator);
-                   // controller.play();
                     new SequentialTransition(firstRotator, secondRotator).play();
 
-                   // board[i][j]=tmp;
+                    board[i][j]=tmp;
 
         		}
 
@@ -261,6 +224,7 @@ public class Board_Beta extends GridPane{
 
 		if(cur_state>0) {
 			cur_state--;
+			System.out.println(cur_state);
 			for(int i=0;i<8;i++)
 				for(int j=0;j<8;j++) {
 					board[i][j].setType(board_state[cur_state][i][j].getType());
@@ -324,6 +288,7 @@ public class Board_Beta extends GridPane{
 
 		return isvalid;
 	}
+
 
 
 }
