@@ -1,10 +1,10 @@
 package game;
 
+
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
-import javafx.event.Event;
-import javafx.event.EventHandler;
+
 import javafx.geometry.Pos;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -29,15 +29,15 @@ public class Board_Beta extends GridPane{
 
     protected PieceType currentPlayer;
     protected PieceType nextPlayer;
-	//private double cell_width;
-   // private double cell_height;
     protected int B_score;
     protected int W_score;
     protected int cur_state;
     protected boolean[][] can_verse;
     protected int[][] direction = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
 
+   // protected Title_Label title_Label;
     protected boolean in_play;
+  //  protected Title_Label title_Label;
 
 	public Board_Beta(int Board_Size) {
 
@@ -51,6 +51,7 @@ public class Board_Beta extends GridPane{
 		Square=new Pane[8][8];
 		this.Board_Size=Board_Size;
 		this.flipDuration= Duration.millis(flip_duration);
+		
 
 		for(int i=0;i<8;i++) {
 			getRowConstraints().add( new RowConstraints(Board_Size));
@@ -66,6 +67,9 @@ public class Board_Beta extends GridPane{
 				add(Square[i][j],i,j);
 
 			}
+
+
+
 		for(int k=0;k<64;k++)
 			for(int i=0;i<8;i++)
 				for(int j=0;j<8;j++) {
@@ -93,6 +97,8 @@ public class Board_Beta extends GridPane{
 
 
 	}
+
+
 	public void placepiece() {
 		for(int i=0;i<8;i++)
 			for(int j=0;j<8;j++) {
@@ -114,13 +120,14 @@ public class Board_Beta extends GridPane{
 						flip(f_i,f_j);
 
 						swapPlayer();
+						//updateTitle();
 						updatescore();
 						checkgameEnd();
 				        if(!in_play)findWinner();
 				        for(int ti=0;ti<8;ti++)
 					        for(int tj=0;tj<8;tj++)
 								board_state[cur_state][ti][tj].setType(board[ti][tj].getType());
-				        System.out.println("cur"+cur_state);
+				      //  System.out.println("cur"+cur_state);
 					}
 
 
@@ -129,6 +136,10 @@ public class Board_Beta extends GridPane{
 
 
 	}
+	/*private void updateTitle() {
+		//Title_Label title_Label=new Title_Label(0, true);
+		title_Label.updateTitle(title_Label, currentPlayer);
+	}*/
 	protected void flip(int cellx,int celly) {
 		for(int i=0;i<8;i++)
         	for(int j=0;j<8;j++)
@@ -219,8 +230,8 @@ public class Board_Beta extends GridPane{
 
 
 	}
-	public void previous_move() {
-
+	public void previous_move(int type) {
+		//PVP type 0 else 1
 
 		if(cur_state>0) {
 			cur_state--;
@@ -231,6 +242,11 @@ public class Board_Beta extends GridPane{
 				}
 			swapPlayer();
 			updatescore();
+		}
+		if(type==1) {
+			if(currentPlayer==PieceType.WHITE) {
+				previous_move(type);
+			}
 		}
 	}
 	protected void updatescore() {
@@ -291,4 +307,4 @@ public class Board_Beta extends GridPane{
 
 
 
-
+}

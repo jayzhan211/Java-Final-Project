@@ -10,9 +10,10 @@ import javafx.util.Duration;
 
 public class Board_PvC extends Board_Beta{
 	double Computer_delay=1000;
+	protected Title_Label title_Label;
 	public Board_PvC(int Board_Size) {
-
 		super(Board_Size);
+
 	}
 	public void placepiece() {
 
@@ -49,7 +50,7 @@ public class Board_PvC extends Board_Beta{
 					        if(currentPlayer==PieceType.WHITE)
 					        	computer_turn();
 						}
-						
+
 
 
 					}
@@ -58,7 +59,8 @@ public class Board_PvC extends Board_Beta{
 				});
 			}
 	}
-
+	public void computer_turn() {
+		System.out.println("123");
 		Timeline timeline=new Timeline(new KeyFrame(Duration.millis(Computer_delay), e->{
 
 
@@ -85,7 +87,9 @@ public class Board_PvC extends Board_Beta{
 						}
 				}
 				Event.fireEvent(Square[pos_i][pos_j], new MouseEvent(MouseEvent.MOUSE_CLICKED, Square[pos_i][pos_j].getLayoutX()/2, Square[pos_i][pos_j].getLayoutY()/2,Square[pos_i][pos_j].getLayoutX()/2, Square[pos_i][pos_j].getLayoutY()/2, MouseButton.PRIMARY, 1, true, true, true, true, true, true, true, true, true, true, null));
-				//(node, new MouseEvent(MouseEvent.MOUSE_CLICKED, node.getLayoutX()/2, node.getLayoutY()/2, node.getLayoutX()/2, node.getLayoutY()/2, MouseButton.PRIMARY, 1, true, true, true, true, true, true, true, true, true, true, null));
+
+				 //(EventType<? extends MouseEvent> eventType, double x, double y, double screenX, double screenY, MouseButton button, int clickCount, boolean shiftDown, boolean controlDown, boolean altDown, boolean metaDown, boolean primaryButtonDown, boolean middleButtonDown, boolean secondaryButtonDown, boolean synthesized, boolean popupTrigger, boolean stillSincePress, PickResult pickResult)
+
 		}));
 		timeline.play();
 	}
