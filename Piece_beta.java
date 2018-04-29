@@ -15,7 +15,11 @@ public class Piece_beta extends Circle{
     }
     public SquareType getType() { return player; }
     public void setType(SquareType squareType) {
+    	System.out.println("hhh3");
     	this.player=squareType;
+    	squareType.getColor();
+    	System.out.println("---");
     	setFill(squareType.getColor());
+    	System.out.println("hhh2");
     }
 }

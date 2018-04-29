@@ -1,17 +1,10 @@
 package game;
 
-import core.Board;
-import core.SquareState;
+
 import javafx.geometry.Point2D;
-import core.Player;
 import java.awt.Point;
 import java.util.Set;
-import logic.ai.evaluation.Evaluation;
-import logic.ai.evaluation.ScoreCornerWeightEval;
-import logic.ai.evaluation.ScoreDiffEval;
-import logic.ai.evaluation.ScoreEval;
-import logic.ai.searchers.AbstractSearcher;
-import logic.ai.searchers.NegaMax;
+
 
 /**
  * Controller is the basic coordinator and communication means
