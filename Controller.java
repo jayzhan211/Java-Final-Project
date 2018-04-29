@@ -53,7 +53,6 @@ public final class Controller {
 		return getBlackScore() == getWhiteScore();
 	}
 	public boolean endOfGame() {
-		System.out.println(board.isFull()+" "+checkZeroScore()+" "+(canMove==CANNOTMOVE));
 		return board.isFull() || checkZeroScore() || canMove == CANNOTMOVE;
 	}
 
@@ -68,11 +67,6 @@ public final class Controller {
 	public Player currentPlayer() {
 		return player;
 	}
-
-	public String boardWithTurn() {
-		return board.toStringWithStatsTurn(player);
-	}
-
 	public void init() {
 		board.init();
 		player = Player.BLACK;
