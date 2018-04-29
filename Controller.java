@@ -2,25 +2,9 @@ package game;
 
 
 import javafx.geometry.Point2D;
-import java.awt.Point;
 import java.util.Set;
-
-
-/**
- * Controller is the basic coordinator and communication means
- * from the game abstraction to the model manipulation.
- *
- * @author c00kiemon5ter
- */
 public final class Controller {
 
-	/**
-	 * {@code turn} has two values
-	 * <ul>
-	 * <li>false : if it the black player plays
-	 * <li>true  : if it the white player plays
-	 * </ul>
-	 */
 	private Board board;
 	private Player player;
 	public static final int DEFAULT_DEPTH = 3;
@@ -68,18 +52,8 @@ public final class Controller {
 	public boolean isDraw() {
 		return getBlackScore() == getWhiteScore();
 	}
-
-	/**
-	 * Game stops if <br/>
-	 * <ol>
-	 * <li> board is full</li>
-	 * <li> one's score is 0/zero</li>
-	 * <li> none has a valid next move</li>
-	 * </ol>
-	 *
-	 * @return if the game is over
-	 */
 	public boolean endOfGame() {
+		System.out.println(board.isFull()+" "+checkZeroScore()+" "+(canMove==CANNOTMOVE));
 		return board.isFull() || checkZeroScore() || canMove == CANNOTMOVE;
 	}
 
@@ -105,8 +79,8 @@ public final class Controller {
 		canMove = CANMOVE;
 	}
 
-	public void setDifficulty(DifficultyLevel level) {
-		depth = level.level();
+	public void setDifficulty(DifficultyLevel type) {
+		depth = type.level();
 	}
 
 	public Point2D evalMove() {
