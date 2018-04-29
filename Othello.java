@@ -59,8 +59,12 @@ public class Othello extends Application{
 		return_button.setScaleX(1.3);
 
 		PVP.setTranslateX(0);
-		PVP.setTranslateY(-50);
+		PVP.setTranslateY(-100);
 
+		PVC_Easy.setTranslateX(0);
+		PVC_Easy.setTranslateY(-50);
+		
+		
 		PVC_Normal.setTranslateX(0);
 		PVC_Normal.setTranslateY(0);
 
@@ -69,8 +73,8 @@ public class Othello extends Application{
 		
 		PVC_Nightmare.setTranslateX(0);
 		PVC_Nightmare.setTranslateY(100);
-
-		choose_pane.getChildren().addAll(return_button,PVC_Easy,PVP,PVC_Normal,PVC_Hard,PVC_Nightmare);
+		
+		choose_pane.getChildren().addAll(return_button,PVP,PVC_Easy,PVC_Normal,PVC_Hard,PVC_Nightmare);
 		choose_scene=new Scene(choose_pane,window_width, window_height);
 
 		game_board=new Game_Scene();
@@ -99,12 +103,12 @@ public class Othello extends Application{
         	primaryStage.setScene(game_scene);
 		});
         PVC_Easy.setOnAction(e->{
-        	new UIGame(true, 1,game_board);
+        	new UIGame(true, 3,game_board);
         	primaryStage.setScene(game_scene);
 
 		});
         PVC_Normal.setOnAction(e->{
-        	new UIGame(true, 3,game_board);
+        	new UIGame(true, 4,game_board);
         	primaryStage.setScene(game_scene);
 
 		});
@@ -115,7 +119,7 @@ public class Othello extends Application{
 		});
 
         PVC_Nightmare.setOnAction(e->{
-        	new UIGame(true, 7,game_board);
+        	new UIGame(true, 6,game_board);
         	primaryStage.setScene(game_scene);
 
 		});
