@@ -40,15 +40,21 @@ public class Game_Scene extends StackPane{
 		this.showturn.setText(winnerName + "!");
 	}
 	public void markPossibleMoves(Collection<Point2D> possibleMoves, SquareType color) {
-		for (Point2D possiblePoint : possibleMoves)
+		System.out.println("bbb1");
+		for (Point2D possiblePoint : possibleMoves) {
+			//System.out.println(possiblePoint.getX()+" "+possiblePoint.getY());
 			setSquare(possiblePoint, color);
+		}
+		System.out.println("bbb2");
 	}
 	private void setSquare(Point2D point, SquareType squareType) {
 		int x=(int)point.getX();
 		int y=(int)point.getY();
 		board_state.board[x][y].setType(squareType);
+
 	}
 	public void unmarkPossibleMoves(Collection<Point2D> possibleMoves) {
+
 		for (Point2D possiblePoint : possibleMoves)
 			setSquare(possiblePoint,SquareType.EMPTY );
 	}

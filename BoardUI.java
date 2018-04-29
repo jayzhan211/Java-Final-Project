@@ -1,9 +1,8 @@
 package game;
 
-import javax.swing.JWindow;
+
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
