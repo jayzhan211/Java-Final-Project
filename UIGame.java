@@ -12,53 +12,55 @@ public class UIGame{
 	private Game_Scene boardUI;
 	private Controller controller=Controller.getInstance();
 	private Set<Point2D> possblMoves;
-
+	private boolean game_end;
+	
 	public UIGame(boolean Vs_AI, int difficulty, Game_Scene board) {
 		this.boardUI=board;
-		//System.out.println(Vs_AI+" "+difficulty);
+		this.game_end=false;
 		this.boardUI.vsRobots=Vs_AI;
 		switch (difficulty) {
-			case 1:
+			case 3:
 				controller.setDifficulty(DifficultyLevel.EASY);
-			case 2:
+			case 4:
 				controller.setDifficulty(DifficultyLevel.NORMAL);
+			case 5:
+				controller.setDifficulty(DifficultyLevel.HARD);
+			case 6:
+				controller.setDifficulty(DifficultyLevel.Nightmare);
 			break;
 		}
 		
 		this.controller.init();
+
 		for(int i=0;i<8;i++)
 			for(int j=0;j<8;j++) {
 				final int ii=i,jj=j;
 				boardUI.board_state.squares[i][j].setOnMouseClicked(e->{
-					if (controller.endOfGame())
-						gameEnd();
+					if(game_end)return ;
+					
+					if (!findPossibleMoves()) 
+						pass();
 					else {
 						possblMoves = markPossibleMoves();
-						if (possblMoves.isEmpty()) {
-							pass();
-						}
-						else {
-							Point2D selectedMove=new Point2D(ii, jj);
-							if (possblMoves.contains(selectedMove)) {
-								boardUI.unmarkPossibleMoves(possblMoves);
-								makeMove(selectedMove);
+						Point2D selectedMove=new Point2D(ii, jj);
+						if (possblMoves.contains(selectedMove)) {
+							boardUI.unmarkPossibleMoves(possblMoves);
+							makeMove(selectedMove);
+							updateStats();
+							changeTurn();
+							//computer turn's
+							if (boardUI.againstRobots()&&controller.currentPlayer() != boardUI.getPlayerSelection()) {
+								Point2D computerMove = controller.evalMove();			
+								makeMove(computerMove);
 								updateStats();
 								changeTurn();
-								//computer turn's
-								if (boardUI.againstRobots()&&controller.currentPlayer() != boardUI.getPlayerSelection()) {
-									Point2D computerMove = controller.evalMove();			
-									makeMove(computerMove);
-									updateStats();
-									changeTurn();
-								}
 							}
-							
-							
-							
 						}
-
 					}
-
+					
+					if (controller.endOfGame())
+						gameEnd();
+					
 				});
 			}
 
@@ -67,6 +69,11 @@ public class UIGame{
 		SquareType color = controller.currentPlayer().color()== SquareState.WHITE? SquareType.WHITE : SquareType.BLACK;
 		Set<Point2D> squaresToChange = controller.makeMove(move);
 		boardUI.fill(squaresToChange, color);
+	}
+	private boolean findPossibleMoves() {
+		Set<Point2D> moves = controller.markPossibleMoves();
+		controller.unmarkPossibleMoves();
+		return !moves.isEmpty();
 	}
 	private Set<Point2D> markPossibleMoves() {
 		Set<Point2D> moves = controller.markPossibleMoves();
@@ -80,6 +87,7 @@ public class UIGame{
 
 
 	private void gameEnd() {
+		game_end=true;
 		updateStats();
 		if (controller.isDraw()) {
 			boardUI.declareDraw();
