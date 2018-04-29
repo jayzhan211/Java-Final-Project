@@ -113,44 +113,6 @@ public final class Board{
 		changedSquares.add(move);
 		return changedSquares;
 	}
-
-	@Override
-	public String toString() {
-		Point point = new Point();
-		StringBuilder sb = new StringBuilder();
-		sb.append("  A B C D E F G H");
-		for (point.x = 0; point.x < BOARD_LENGTH; point.x++) {
-			sb.append('\n').append(point.x + 1);
-			for (point.y = 0; point.y < BOARD_WIDTH; point.y++) {
-				sb.append(' ').append(board.get(point).symbol());
-			}
-		}
-		sb.append('\n');
-		return sb.toString();
-	}
-
-	public String toStringWithStats() {
-		StringBuilder sb = new StringBuilder();
-		String[] rows = toString().split("\n");
-		for (int row = 0; row < rows.length; row++) {
-			sb.append('\n').append(rows[row]);
-			switch (row) {
-				case 2:
-					sb.append('\t').append(SquareState.BLACK.symbol()).
-						append(' ').append(Player.BLACK).
-						append(": ").append(count(SquareState.BLACK));
-					break;
-				case 4:
-					sb.append('\t').append(SquareState.WHITE.symbol()).
-						append(' ').append(Player.WHITE).
-						append(": ").append(count(SquareState.WHITE));
-					break;
-			}
-		}
-		sb.append('\n');
-		return sb.toString();
-	}
-
 	public String toStringWithStatsTurn(Player player) {
 		StringBuilder sb = new StringBuilder();
 		String[] rows = toString().split("\n");
@@ -175,12 +137,6 @@ public final class Board{
 		sb.append('\n');
 		return sb.toString();
 	}
-
-	/**
-	 * Deep copy of this board.
-	 *
-	 * @return
-	 */
 	@Override
 	public Board clone() {
 		return new Board(this.board);
