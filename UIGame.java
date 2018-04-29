@@ -30,32 +30,23 @@ public class UIGame{
 			for(int j=0;j<8;j++) {
 				final int ii=i,jj=j;
 				boardUI.board_state.squares[i][j].setOnMouseClicked(e->{
-					System.out.println("123");
 					if (controller.endOfGame())
 						gameEnd();
 					else {
-						
 						possblMoves = markPossibleMoves();
-						System.out.println("cc");
 						if (possblMoves.isEmpty()) {
 							pass();
-							System.out.println("b?");
 						}
 						else {
 							Point2D selectedMove=new Point2D(ii, jj);
-							System.out.println("zZ");
-							System.out.println(ii+" "+jj);
 							if (possblMoves.contains(selectedMove)) {
 								boardUI.unmarkPossibleMoves(possblMoves);
 								makeMove(selectedMove);
 								updateStats();
 								changeTurn();
 								//computer turn's
-								if (controller.currentPlayer() != boardUI.getPlayerSelection() && boardUI.againstRobots()) {
-									System.out.println("ss23");
-									boardUI.unmarkPossibleMoves(possblMoves);
-									Point2D computerMove = controller.evalMove();
-									
+								if (boardUI.againstRobots()&&controller.currentPlayer() != boardUI.getPlayerSelection()) {
+									Point2D computerMove = controller.evalMove();			
 									makeMove(computerMove);
 									updateStats();
 									changeTurn();
