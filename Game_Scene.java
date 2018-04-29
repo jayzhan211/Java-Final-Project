@@ -8,6 +8,7 @@ import javafx.animation.SequentialTransition;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
@@ -34,6 +35,7 @@ public class Game_Scene extends StackPane{
 		showturn.setTranslateY(300);
 		this.getChildren().addAll(board_state,whitescore,blackscore,showturn);
 		this.flipDuration=Duration.millis(flip_duration);
+		this.showturn.setFont(new Font("Allerta Stencil",30));
 	}
 	public void updateScore(int blackscore, int whitescore) {
 		this.blackscore.setText("Black: " + blackscore);
@@ -43,7 +45,8 @@ public class Game_Scene extends StackPane{
 		this.showturn.setText("Draw !?");
 	}
 	public void declareWinner(String winnerName) {
-		this.showturn.setText(winnerName + "!");
+		this.showturn.setText(winnerName + " has win the game!!!");
+		this.showturn.setFont(new Font("Allerta Stencil",15));
 	}
 	public void markPossibleMoves(Collection<Point2D> possibleMoves, SquareType color) {
 		for (Point2D possiblePoint : possibleMoves) 
@@ -81,7 +84,7 @@ public class Game_Scene extends StackPane{
 		this.showturn.setText(player+": PASS!!!");
 	}
 	public void updateTurn(String player) {
-		this.showturn.setText(player+"'s turn");
+		this.showturn.setText(player);
 	}
 	public Player getPlayerSelection() {
 		return human;
