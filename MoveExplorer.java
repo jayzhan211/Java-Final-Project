@@ -13,40 +13,17 @@ import javafx.geometry.Point2D;
  */
 public class MoveExplorer {
 
-	/**
-	 * Given a starting position - seed - checks if there's possibility of
-	 * finding a desired result looking towards some {@code Direction}.
-	 *
-	 * @param board - the board to search in
-	 * @param seed - where we start searching from
-	 * @param direction - which direction should we search
-	 * @return if search in this direction is likely to have interesting findings
-	 */
+
 	private static boolean shouldSearch(final Board board, final Point2D seed, final Direction direction) {
 		Point2D nextPoint = direction.next(seed);
 		return pointIsValid(nextPoint) ? board.getSquareState(nextPoint)
 						 == board.getSquareState(seed).opposite() : false;
 	}
-
-	/**
-	 * Check if the given point a valid point on the board.
-	 * Valid means within board limits
-	 *
-	 * @param point - the point to check
-	 * @return if the point is valid
-	 */
 	private static boolean pointIsValid(Point2D point) {
 		return point.getX() >= 0 && point.getX() < Board.BOARD_LENGTH
 		       && point.getY() >= 0 && point.getY() < Board.BOARD_WIDTH;
 	}
 
-	/**
-	 * Find all possible points where a player with the given state can move next
-	 *
-	 * @param board - the board to look into
-	 * @param state - the player's color
-	 * @return the player's possible moves
-	 */
 	public static Set<Point2D> explore(final Board board, final SquareState state) {
 		Set<Point2D> possibleMoves = new HashSet<Point2D>();
 		Set<Point2D> statePoints = board.getSquares(state);
@@ -69,15 +46,6 @@ public class MoveExplorer {
 		}
 		return possibleMoves;
 	}
-
-	/**
-	 * Given a starting position - seed - find all points on the board
-	 * that must be filled or have their color/state changed.
-	 *
-	 * @param board - the board to look into
-	 * @param seed - the starting position
-	 * @return the points that need to change state
-	 */
 	public static Set<Point2D> squaresToFill(final Board board, final Point2D seed) {
 		Set<Point2D> filledlist = new HashSet<Point2D>();
 		SquareState seedState = board.getSquareState(seed);
