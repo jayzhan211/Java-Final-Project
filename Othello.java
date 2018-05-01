@@ -3,10 +3,11 @@ package game;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
+
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -33,7 +34,10 @@ public class Othello extends Application{
 	public void init() throws Exception {
 		//First Scene
 		start_pane = new StackPane();
-		startButton = new Button("Start_Othello");
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/game/Start_Image.jpg")));
+		start_pane.getChildren().add(image);
+
+		startButton = new Button("Othello");
 		start_pane.getChildren().add(startButton);
 		startButton.setStyle(
 				"-fx-background-radius: 500em; " +
@@ -44,9 +48,13 @@ public class Othello extends Application{
         );
 		startButton.setFont(new Font("Arial Bold",25));
 		start_scene=new Scene(start_pane,window_width, window_height);
-		
+
 		//Second Scene
 		choose_pane=new StackPane();
+		ImageView image1 = new ImageView(new Image("/game/othello.jpg",window_width,window_height, false, false, false));
+		choose_pane.getChildren().add(image1);
+
+
 		return_button=new Button("Return");
 		PVP=new Button("Player vs Player");
 		PVC_Easy=new Button("Easy");
@@ -63,17 +71,17 @@ public class Othello extends Application{
 
 		PVC_Easy.setTranslateX(0);
 		PVC_Easy.setTranslateY(-50);
-		
-		
+
+
 		PVC_Normal.setTranslateX(0);
 		PVC_Normal.setTranslateY(0);
 
 		PVC_Hard.setTranslateX(0);
 		PVC_Hard.setTranslateY(50);
-		
+
 		PVC_Nightmare.setTranslateX(0);
 		PVC_Nightmare.setTranslateY(100);
-		
+
 		choose_pane.getChildren().addAll(return_button,PVP,PVC_Easy,PVC_Normal,PVC_Hard,PVC_Nightmare);
 		choose_scene=new Scene(choose_pane,window_width, window_height);
 
@@ -86,7 +94,7 @@ public class Othello extends Application{
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Othello");
         primaryStage.setScene(start_scene);
-        //primaryStage.setResizable(false);
+        primaryStage.setResizable(false);
         primaryStage.show();
 
         startButton.setOnAction(e->{
@@ -123,7 +131,7 @@ public class Othello extends Application{
         	primaryStage.setScene(game_scene);
 
 		});
-        
+
     }
     public static void main(String[] args) {
         launch(args);
