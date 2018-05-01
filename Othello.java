@@ -106,28 +106,28 @@ public class Othello extends Application{
 
 		});
         PVP.setOnAction(e->{
-        	new UIGame(false, -1,game_board);
+        	new UIGame(false, "PVP",game_board);
 
         	primaryStage.setScene(game_scene);
 		});
         PVC_Easy.setOnAction(e->{
-        	new UIGame(true, 3,game_board);
+        	new UIGame(true, "Easy",game_board);
         	primaryStage.setScene(game_scene);
 
 		});
         PVC_Normal.setOnAction(e->{
-        	new UIGame(true, 4,game_board);
+        	new UIGame(true, "Normal",game_board);
         	primaryStage.setScene(game_scene);
 
 		});
         PVC_Hard.setOnAction(e->{
-        	new UIGame(true, 5,game_board);
+        	new UIGame(true, "Hard",game_board);
         	primaryStage.setScene(game_scene);
 
 		});
 
         PVC_Nightmare.setOnAction(e->{
-        	new UIGame(true, 6,game_board);
+        	new UIGame(true, "Nightmare",game_board);
         	primaryStage.setScene(game_scene);
 
 		});

@@ -5,12 +5,7 @@ package game;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
-
 import javafx.geometry.Point2D;
-
-/**
- * Explores moves.
- */
 public class MoveExplorer {
 
 

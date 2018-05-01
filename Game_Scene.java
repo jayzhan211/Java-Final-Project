@@ -49,13 +49,13 @@ public class Game_Scene extends StackPane{
 		this.showturn.setFont(new Font("Allerta Stencil",15));
 	}
 	public void markPossibleMoves(Collection<Point2D> possibleMoves, SquareType color) {
-		for (Point2D possiblePoint : possibleMoves) 
+		for (Point2D possiblePoint : possibleMoves)
 			setSquare(possiblePoint, color);
 	}
 	private void setSquare(Point2D point, SquareType squareType) {
 		int x=(int)point.getX();
 		int y=(int)point.getY();
-		
+
 		if(squareType==SquareType.BLACK||squareType==SquareType.WHITE) {
 			RotateTransition firstRotator = new RotateTransition(flipDuration,board_state.board[x][y]);
 			firstRotator.setAxis(Rotate.Y_AXIS);
@@ -73,7 +73,7 @@ public class Game_Scene extends StackPane{
 		    new SequentialTransition(firstRotator, secondRotator).play();
 	    }
 		else board_state.board[x][y].setType(squareType);
-		
+
 	}
 	public void unmarkPossibleMoves(Collection<Point2D> possibleMoves) {
 
@@ -95,8 +95,5 @@ public class Game_Scene extends StackPane{
 	public void fill(Collection<Point2D> filledpoints, SquareType color) {
 		for (Point2D toFill : filledpoints)
 			setSquare(toFill, color);
-	}
-	public Piece_beta[][] getSquares(){
-		return board_state.board;
 	}
 }

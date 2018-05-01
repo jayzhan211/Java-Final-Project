@@ -4,26 +4,6 @@ package game;
 import javafx.geometry.Point2D;
 
 import java.util.Set;
-import java.awt.Point;
-
-
-/**
- * <p>Negamax search is a slightly variant formulation of minimax search
- * that relies on the zero-sum property of a two-player game.</p>
- * <p>By definition the value of a position to player A in such a game is
- * the negation of the value to player B. Thus, the player on move looks
- * for a move that maximizes the negation of the value of the position
- * resulting from the move: this successor position must by definition
- * have been valued by the opponent. </p>
- * <p>The reasoning of the previous sentence works regardless of whether
- * A or B is on move. This means that a single computation can be used to
- * value all positions</p>
- * <p>This is a coding simplification over minimax, which requires that A
- * select the move with the maximum-valued successor while B selects the
- * move with the minimum-valued successor.</p>
- * 
- * @author c00kiemon5ter
- */
 public class NegaMax extends AbstractSearcher implements Searcher, SimpleSearcher {
 
 	@Override

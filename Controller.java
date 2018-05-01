@@ -4,12 +4,10 @@ package game;
 import javafx.geometry.Point2D;
 import java.util.Set;
 public final class Controller {
-
 	private Board board;
 	private Player player;
 	public static final int DEFAULT_DEPTH = 3;
 	private static int depth = DEFAULT_DEPTH;
-	/* 0: all good , 1: one cant move , 2: none can move */
 	private final short CANMOVE = 0, CANNOTMOVE = 2;
 	private short canMove = CANMOVE;
 
@@ -31,10 +29,6 @@ public final class Controller {
 
 	public Set<Point2D> makeMove(Point2D move) {
 		return board.makeMove(move, player.color());
-	}
-
-	private int calcScore(SquareState state) {
-		return board.count(state);
 	}
 
 	public int getBlackScore() {
@@ -74,7 +68,7 @@ public final class Controller {
 	}
 
 	public void setDifficulty(DifficultyLevel type) {
-		depth = type.level();
+		depth = type.level;
 	}
 
 	public Point2D evalMove() {
