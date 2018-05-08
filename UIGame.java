@@ -51,8 +51,9 @@ public class UIGame{
 							makeMove(selectedMove);
 							updateStats();
 							changeTurn();
+
 							//computer turn's
-							if (boardUI.againstRobots()&&controller.currentPlayer() != boardUI.getPlayerSelection()) {
+							if (!controller.endOfGame()&&boardUI.againstRobots()&&controller.currentPlayer() != boardUI.getPlayerSelection()) {
 								computer_turn();
 							}
 						}
