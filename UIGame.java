@@ -7,28 +7,29 @@ import java.util.Set;
 
 import javafx.geometry.Point2D;
 
+
 public class UIGame{
 	private Game_Scene boardUI;
 	private Controller controller=Controller.getInstance();
 	private Set<Point2D> possblMoves;
 	private boolean game_end;
-
-	public UIGame(boolean Vs_AI, String difficulty, Game_Scene board) {
+	
+	public UIGame(boolean Vs_AI, int difficulty, Game_Scene board) {
 		this.boardUI=board;
 		this.game_end=false;
 		this.boardUI.vsRobots=Vs_AI;
 		switch (difficulty) {
-			case "Easy":
+			case 3:
 				controller.setDifficulty(DifficultyLevel.EASY);
-			case "Normal":
+			case 4:
 				controller.setDifficulty(DifficultyLevel.NORMAL);
-			case "Hard":
+			case 5:
 				controller.setDifficulty(DifficultyLevel.HARD);
-			case "Nightmare":
+			case 6:
 				controller.setDifficulty(DifficultyLevel.Nightmare);
 			break;
 		}
-
+		
 		this.controller.init();
 
 		for(int i=0;i<8;i++)
@@ -36,12 +37,12 @@ public class UIGame{
 				final int ii=i,jj=j;
 				boardUI.board_state.squares[i][j].setOnMouseClicked(e->{
 					if(game_end)return ;
-
+					
 					if (!findPossibleMoves()) {
 						pass();
-						if (boardUI.againstRobots()&&controller.currentPlayer() != boardUI.getPlayerSelection()) {
-							computer_turn();
-						}
+						computer_turn();
+						
+						
 					}
 					else {
 						possblMoves = markPossibleMoves();
@@ -51,28 +52,30 @@ public class UIGame{
 							makeMove(selectedMove);
 							updateStats();
 							changeTurn();
-
-							//computer turn's
-							if (!controller.endOfGame()&&boardUI.againstRobots()&&controller.currentPlayer() != boardUI.getPlayerSelection()) {
-								computer_turn();
-							}
+							computer_turn();			
 						}
 					}
-
-
+					
 					if (controller.endOfGame())
 						gameEnd();
-
+					
 				});
 			}
 
 	}
+	
+	
 	private void computer_turn() {
-		Point2D computerMove = controller.evalMove();
-		makeMove(computerMove);
-		updateStats();
-		changeTurn();
+		if (boardUI.againstRobots()&&controller.currentPlayer() != boardUI.getPlayerSelection()) {
+			Point2D computerMove = controller.evalMove();			
+			makeMove(computerMove);
+			updateStats();
+			changeTurn();
+		}
+		
 	}
+
+
 	private void makeMove(Point2D move) {
 		SquareType color = controller.currentPlayer().color()== SquareState.WHITE? SquareType.WHITE : SquareType.BLACK;
 		Set<Point2D> squaresToChange = controller.makeMove(move);
@@ -108,7 +111,7 @@ public class UIGame{
 	}
 	private void pass() {
 		lostTurn();
-		//updateStats();
+		updateStats();
 	}
 	private void lostTurn() {
 		boardUI.notifyLostTurn(controller.currentPlayer());
