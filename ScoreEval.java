@@ -3,10 +3,9 @@ package game;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javafx.geometry.Point2D;
 
-public class ScoreEval implements Evaluation {
+public class ScoreEval{
 
 	private Set<Point2D> corners;
 	private int weight;
@@ -20,7 +19,7 @@ public class ScoreEval implements Evaluation {
 		this.corners.add(new Point2D(0, Board.Board_Width));
 		this.corners.add(new Point2D(Board.Board_Height, Board.Board_Width));
 	}
-	@Override
+
 	public int evaluate(Board board, Player player) {
 		int score = board.count(player.color());
 		for (Point2D p : corners) {
