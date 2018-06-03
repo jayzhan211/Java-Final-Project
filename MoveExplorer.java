@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 import javafx.geometry.Point2D;
+
 public class MoveExplorer {
 
 
@@ -15,8 +16,8 @@ public class MoveExplorer {
 						 == board.getSquareState(seed).opposite() : false;
 	}
 	private static boolean pointIsValid(Point2D point) {
-		return point.getX() >= 0 && point.getX() < Board.BOARD_LENGTH
-		       && point.getY() >= 0 && point.getY() < Board.BOARD_WIDTH;
+		return point.getX() >= 0 && point.getX() < Board.Board_Height
+		       && point.getY() >= 0 && point.getY() < Board.Board_Width;
 	}
 
 	public static Set<Point2D> explore(final Board board, final SquareState state) {
