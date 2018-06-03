@@ -16,9 +16,9 @@ public class ScoreEval implements Evaluation {
 		this.weight = weight;
 		this.corners = new HashSet<Point2D>(4);
 		this.corners.add(new Point2D(0, 0));
-		this.corners.add(new Point2D(Board.BOARD_LENGTH, 0));
-		this.corners.add(new Point2D(0, Board.BOARD_WIDTH));
-		this.corners.add(new Point2D(Board.BOARD_LENGTH, Board.BOARD_WIDTH));
+		this.corners.add(new Point2D(Board.Board_Height, 0));
+		this.corners.add(new Point2D(0, Board.Board_Width));
+		this.corners.add(new Point2D(Board.Board_Height, Board.Board_Width));
 	}
 	@Override
 	public int evaluate(Board board, Player player) {
