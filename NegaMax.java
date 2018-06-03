@@ -2,13 +2,11 @@ package game;
 
 
 import javafx.geometry.Point2D;
-
 import java.util.Set;
-public class NegaMax extends AbstractSearcher implements Searcher{
 
-	@Override
+public class NegaMax{
+
 	public SearchResult search(final Board board, final Player player, int alpha, int beta, final int depth, final Evaluation evfunction) {
-
 		if (depth <= 0 || isEndState(board)) {
 			return new SearchResult(null, evfunction.evaluate(board, player));
 		} else { /* there's more to check */
@@ -40,6 +38,7 @@ public class NegaMax extends AbstractSearcher implements Searcher{
 						alpha = score;
 						best = new SearchResult(nextPossibleMove, score);
 					}
+					/* Alpha Beta Pruning */
 					if (alpha >= beta) {
 						return best;
 					}
@@ -47,5 +46,10 @@ public class NegaMax extends AbstractSearcher implements Searcher{
 			}
 			return best;
 		}
+	}
+	private boolean isEndState(final Board board) {
+		return board.isFull()
+		       || board.count(SquareState.BLACK) == 0
+		       || board.count(SquareState.WHITE) == 0;
 	}
 }
