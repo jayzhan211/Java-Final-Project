@@ -73,7 +73,7 @@ public final class Controller {
 
 	public Point2D evalMove() {
 		NegaMax searcher;
-		Evaluation evalfunc;
+		ScoreEval evalfunc;
 		searcher = new NegaMax();
 		evalfunc = new ScoreEval(64);
 		return searcher.search(board, player, Integer.MIN_VALUE, Integer.MAX_VALUE, depth, evalfunc).getPoint();
