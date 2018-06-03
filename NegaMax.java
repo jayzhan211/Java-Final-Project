@@ -6,10 +6,10 @@ import java.util.Set;
 
 public class NegaMax{
 
-	public SearchResult search(final Board board, final Player player, int alpha, int beta, final int depth, final Evaluation evfunction) {
-		if (depth <= 0 || isEndState(board)) {
+	public SearchResult search(final Board board, final Player player, int alpha, int beta, final int depth, final ScoreEval evfunction) {
+		if (depth <= 0 || isEndState(board)) 
 			return new SearchResult(null, evfunction.evaluate(board, player));
-		} else { /* there's more to check */
+		else { 
 			Set<Point2D> possibleMoves = MoveExplorer.explore(board, player.color());
 			SearchResult best = new SearchResult(null, alpha);
 			if (possibleMoves.isEmpty()) { /* turn is lost - check next player */
@@ -26,10 +26,12 @@ public class NegaMax{
 							best = new SearchResult(null, Integer.MAX_VALUE);
 							break;
 					}
-				} else { /* game continues - no moves to check */
+				}
+				else { /* game continues - no moves to check */
 					best = search(board, player.opponent(), -beta, -alpha, depth - 1, evfunction).negated();
 				}
-			} else { /* check the score of each move */
+			}
+			else{ /* check the score of each move */
 				for (Point2D nextPossibleMove : possibleMoves) {
 					Board subBoard = board.clone();
 					subBoard.makeMove(nextPossibleMove, player.color());
@@ -48,8 +50,8 @@ public class NegaMax{
 		}
 	}
 	private boolean isEndState(final Board board) {
-		return board.isFull()
-		       || board.count(SquareState.BLACK) == 0
-		       || board.count(SquareState.WHITE) == 0;
+		return	board.isFull() ||
+				board.count(SquareState.BLACK) == 0||
+				board.count(SquareState.WHITE) == 0;
 	}
 }
