@@ -1,5 +1,6 @@
 package game;
 
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
@@ -7,6 +8,12 @@ import java.util.Set;
 
 import javafx.geometry.Point2D;
 
+
+/**
+ * the game board is a mapping of states to points
+ *
+ * @author c00kiemon5ter
+ */
 public final class Board{
 
 	public static final int BOARD_LENGTH = 8;
@@ -17,6 +24,12 @@ public final class Board{
 		board = new HashMap<Point2D, SquareState>(BOARD_LENGTH * BOARD_WIDTH);
 		init();
 	}
+
+	/**
+	 * Deep copy constructor.
+	 *
+	 * @param board
+	 */
 	private Board(Map<Point2D, SquareState> board) {
 		this.board = new HashMap<Point2D, SquareState>(board.size());
 		for (Point2D point : board.keySet()) {
@@ -29,7 +42,7 @@ public final class Board{
 		for(int i=0;i<8;i++)
 			for(int j=0;j<8;j++)
 				board.put(new Point2D(i, j), SquareState.EMPTY);
-
+		
 		board.put(new Point2D(3, 3), SquareState.WHITE);
 		board.put(new Point2D(3, 4), SquareState.BLACK);
 		board.put(new Point2D(4, 3), SquareState.BLACK);
@@ -100,6 +113,8 @@ public final class Board{
 		changedSquares.add(move);
 		return changedSquares;
 	}
+	
+	@Override
 	public Board clone() {
 		return new Board(this.board);
 	}
