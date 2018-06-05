@@ -9,12 +9,12 @@ import javafx.geometry.Point2D;
 
 public final class Board{
 
-	public static final int Board_Height = 8;
-	public static final int Board_Width = 8;
+	public static final int BOARD_LENGTH = 8;
+	public static final int BOARD_WIDTH = 8;
 	private Map<Point2D, SquareState> board;
 
 	public Board() {
-		board = new HashMap<Point2D, SquareState>(Board_Height * Board_Width);
+		board = new HashMap<Point2D, SquareState>(BOARD_LENGTH * BOARD_WIDTH);
 		init();
 	}
 	private Board(Map<Point2D, SquareState> board) {
@@ -25,7 +25,6 @@ public final class Board{
 	}
 
 	public void init() {
-
 		for(int i=0;i<8;i++)
 			for(int j=0;j<8;j++)
 				board.put(new Point2D(i, j), SquareState.EMPTY);

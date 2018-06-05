@@ -6,10 +6,8 @@ import java.util.Set;
 public final class Controller {
 	private Board board;
 	private Player player;
-	public static final int DEFAULT_DEPTH = 3;
-	private static int depth = DEFAULT_DEPTH;
-	private final short CANMOVE = 0, CANNOTMOVE = 2;
-	private short canMove = CANMOVE;
+	private int depth = 3;
+	private int pass = 0;
 
 	private Controller() {
 		this.board = new Board();
@@ -19,7 +17,7 @@ public final class Controller {
 	public Set<Point2D> markPossibleMoves() {
 		Set<Point2D> moves = board.getPossibleMoves(player);
 		board.markPossibleMoves(moves);
-		canMove = moves.isEmpty() ? ++canMove : CANMOVE;
+		pass = moves.isEmpty() ? pass++ : 0;
 		return moves;
 	}
 
@@ -47,7 +45,7 @@ public final class Controller {
 		return getBlackScore() == getWhiteScore();
 	}
 	public boolean endOfGame() {
-		return board.isFull() || checkZeroScore() || canMove == CANNOTMOVE;
+		return board.isFull() || checkZeroScore() || pass == 2;
 	}
 
 	private boolean checkZeroScore() {
@@ -64,7 +62,7 @@ public final class Controller {
 	public void init() {
 		board.init();
 		player = Player.BLACK;
-		canMove = CANMOVE;
+		pass = 0;
 	}
 
 	public void setDifficulty(DifficultyLevel type) {
@@ -72,11 +70,9 @@ public final class Controller {
 	}
 
 	public Point2D evalMove() {
-		NegaMax searcher;
-		ScoreEval evalfunc;
-		searcher = new NegaMax();
-		evalfunc = new ScoreEval(64);
-		return searcher.search(board, player, Integer.MIN_VALUE, Integer.MAX_VALUE, depth, evalfunc).getPoint();
+		NegaMax searcher = new NegaMax();
+		ScoreEval evalfunction = new ScoreEval(64);
+		return searcher.search(board, player, Integer.MIN_VALUE, Integer.MAX_VALUE, depth, evalfunction).getPoint();
 	}
 
 	private static class ControllerHolder {

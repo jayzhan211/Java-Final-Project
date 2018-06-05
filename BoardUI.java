@@ -10,16 +10,16 @@ import javafx.scene.layout.RowConstraints;
 import javafx.util.Duration;
 
 public class BoardUI extends GridPane{
-	private String background_color = "#654321";
+	private String background_color = "#006600";
 	private int Board_Size=60;
 	public Pane[][] squares;
-	protected Piece_beta[][] board;
+	protected Piece[][] board;
 	protected Duration flipDuration;
     protected int flip_duration=500;
 
 	public BoardUI() {
 		super();
-		board=new Piece_beta[8][8];
+		board=new Piece[8][8];
 		squares=new Pane[8][8];
 		this.flipDuration= Duration.millis(flip_duration);
 
@@ -32,7 +32,7 @@ public class BoardUI extends GridPane{
 		for(int i=0;i<8;i++)
 			for(int j=0;j<8;j++) {
 				squares[i][j]=new Pane();
-				board[i][j]=new Piece_beta(Board_Size, SquareType.EMPTY);
+				board[i][j]=new Piece(Board_Size, SquareType.EMPTY);
 				squares[i][j].setStyle("-fx-background-color: " + background_color + ";");
 				squares[i][j].getChildren().add(board[i][j]);
 				add(squares[i][j],i,j);
@@ -43,8 +43,6 @@ public class BoardUI extends GridPane{
 		board[4][3].setType(SquareType.BLACK);
 		setGridLinesVisible(true);
 		setAlignment(Pos.CENTER);
-
-
 	}
 
 }

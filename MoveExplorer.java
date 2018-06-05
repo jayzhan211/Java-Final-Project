@@ -6,18 +6,16 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 import javafx.geometry.Point2D;
-
 public class MoveExplorer {
 
 
 	private static boolean shouldSearch(final Board board, final Point2D seed, final Direction direction) {
 		Point2D nextPoint = direction.next(seed);
-		return pointIsValid(nextPoint) ? board.getSquareState(nextPoint)
-						 == board.getSquareState(seed).opposite() : false;
+		return pointIsValid(nextPoint) ? board.getSquareState(nextPoint) == board.getSquareState(seed).opposite() : false;
 	}
 	private static boolean pointIsValid(Point2D point) {
-		return point.getX() >= 0 && point.getX() < Board.Board_Height
-		       && point.getY() >= 0 && point.getY() < Board.Board_Width;
+		return point.getX() >= 0 && point.getX() < Board.BOARD_LENGTH
+		       && point.getY() >= 0 && point.getY() < Board.BOARD_WIDTH;
 	}
 
 	public static Set<Point2D> explore(final Board board, final SquareState state) {
