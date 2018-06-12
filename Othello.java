@@ -1,12 +1,19 @@
 package game;
 
+
 import javafx.application.Application;
+
 import javafx.scene.Scene;
+
 import javafx.scene.control.Button;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
 import javafx.scene.layout.StackPane;
+
 import javafx.scene.text.Font;
+
 import javafx.stage.Stage;
 
 public class Othello extends Application{
@@ -27,7 +34,9 @@ public class Othello extends Application{
 	private int window_height=800;
 	private int window_width=800;
     private Game_Scene game_board;
-	private Scene game_scene;
+	public static  Scene game_scene;
+
+	//private MenuBar menuBar;
 
 	public void init() throws Exception {
 		//First Scene
@@ -85,6 +94,8 @@ public class Othello extends Application{
 
 		game_board=new Game_Scene();
 		game_scene=new Scene(game_board,window_width, window_height);
+
+		//game_board.getChildren().add(menuBar);
 	}
 
 
@@ -105,7 +116,7 @@ public class Othello extends Application{
 		});
         PVP.setOnAction(e->{
         	new UIGame(false, "PVP",game_board);
-
+        	//setMenuItemEvent();
         	primaryStage.setScene(game_scene);
 		});
         PVC_Easy.setOnAction(e->{
@@ -129,8 +140,8 @@ public class Othello extends Application{
         	primaryStage.setScene(game_scene);
 
 		});
-
     }
+
     public static void main(String[] args) {
         launch(args);
     }
