@@ -1,15 +1,27 @@
 package game;
 
+import java.awt.image.RenderedImage;
+import java.io.File;
 import java.util.Collection;
+
+import javax.imageio.ImageIO;
 
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Point2D;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
 public class Game_Scene extends StackPane{
@@ -21,6 +33,8 @@ public class Game_Scene extends StackPane{
 	public boolean vsRobots = true;
 	public Duration flipDuration;
     public int flip_duration=500;
+    public MenuBar menuBar;
+    public Menu menu;
 
 	public Game_Scene() {
 		board_state=new BoardUI();
@@ -33,9 +47,23 @@ public class Game_Scene extends StackPane{
 		blackscore.setTranslateY(300);
 		showturn.setTranslateX(0);
 		showturn.setTranslateY(300);
-		this.getChildren().addAll(board_state,whitescore,blackscore,showturn);
+		menuBar=new MenuBar();
+		menuBar.setTranslateX(0);
+		menuBar.setTranslateY(-390);
+		this.getChildren().addAll(board_state,whitescore,blackscore,showturn,menuBar);
 		this.flipDuration=Duration.millis(flip_duration);
 		this.showturn.setFont(new Font("Allerta Stencil",30));
+		menu=new Menu("Click Me Please");
+		MenuItem fMenuItem[]= {new MenuItem("Rule"),new MenuItem("Save Picture")};
+		fMenuItem[1].setOnAction(e->{
+			FileChooser fileChooser=new FileChooser();
+			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG","*.png"));
+			//Othello.saveImage(fileChooser);
+			saveImage(fileChooser);
+		});
+		menu.getItems().addAll(fMenuItem);
+		menuBar.getMenus().addAll(menu);
+
 	}
 	public void updateScore(int blackscore, int whitescore) {
 		this.blackscore.setText("Black: " + blackscore);
@@ -95,5 +123,20 @@ public class Game_Scene extends StackPane{
 	public void fill(Collection<Point2D> filledpoints, SquareType color) {
 		for (Point2D toFill : filledpoints)
 			setSquare(toFill, color);
+	}
+	public void saveImage(FileChooser fileChooser) {
+		File file=fileChooser.showSaveDialog(Othello.game_scene.getWindow());
+		if(file!=null) {
+			try {
+				SnapshotParameters sParameters=new SnapshotParameters();
+				sParameters.setFill(Color.TRANSPARENT);
+				WritableImage writableImage=new WritableImage((int)this.getWidth(),(int)this.getHeight());
+				this.snapshot(sParameters, writableImage);
+				RenderedImage renderedImage=SwingFXUtils.fromFXImage(writableImage,null);
+				ImageIO.write(renderedImage, "png", file);
+
+			}
+			catch (Exception e) {}
+		}
 	}
 }
