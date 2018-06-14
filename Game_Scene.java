@@ -16,10 +16,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Rotate;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
@@ -38,9 +44,24 @@ public class Game_Scene extends StackPane{
 
 	public Game_Scene() {
 		board_state=new BoardUI();
+		Image image=new Image("/game/BGP.jpg",Othello.window_width,Othello.window_height,false, false, false);
+		ImageView bgp = new ImageView(image);
+		//bgp.setOpacity(0.5);
+		this.getChildren().addAll(bgp);
+
 		whitescore=new Label("White");
 		blackscore=new Label("Black");
-		showturn=new Label("Othello_Beta");
+		whitescore.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
+		whitescore.setTextFill(Color.WHITE);
+		blackscore.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
+		blackscore.setTextFill(Color.BLACK);
+
+		showturn=new Label("BetaOthello");
+		showturn.setFont(Font.font("Arial", FontWeight.BOLD, 35));
+		showturn.setTextFill(Color.BLACK);
+
+
+
 		whitescore.setTranslateX(250);
 		whitescore.setTranslateY(300);
 		blackscore.setTranslateX(-250);
@@ -52,29 +73,29 @@ public class Game_Scene extends StackPane{
 		menuBar.setTranslateY(-390);
 		this.getChildren().addAll(board_state,whitescore,blackscore,showturn,menuBar);
 		this.flipDuration=Duration.millis(flip_duration);
-		this.showturn.setFont(new Font("Allerta Stencil",30));
 		menu=new Menu("Click Me Please");
-		MenuItem fMenuItem[]= {new MenuItem("Rule"),new MenuItem("Save Picture")};
-		fMenuItem[1].setOnAction(e->{
+		MenuItem fMenuItem[]= {new MenuItem("Save Picture")};
+		fMenuItem[0].setOnAction(e->{
 			FileChooser fileChooser=new FileChooser();
 			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG","*.png"));
-			//Othello.saveImage(fileChooser);
 			saveImage(fileChooser);
 		});
+		fMenuItem[0].setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		menu.getItems().addAll(fMenuItem);
 		menuBar.getMenus().addAll(menu);
+
 
 	}
 	public void updateScore(int blackscore, int whitescore) {
 		this.blackscore.setText("Black: " + blackscore);
-		this.whitescore.setText("Black: " + whitescore);
+		this.whitescore.setText("White: " + whitescore);
 	}
 	public void declareDraw() {
-		this.showturn.setText("Draw !?");
+		showturn.setText("Draw !?");
 	}
 	public void declareWinner(String winnerName) {
-		this.showturn.setText(winnerName + " has win the game!!!");
-		this.showturn.setFont(new Font("Allerta Stencil",15));
+		showturn.setText(winnerName + " has win the game!!!");
+		showturn.setFont(new Font("Allerta Stencil",35));
 	}
 	public void markPossibleMoves(Collection<Point2D> possibleMoves, SquareType color) {
 		for (Point2D possiblePoint : possibleMoves)
