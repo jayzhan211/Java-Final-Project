@@ -15,9 +15,11 @@ public class UIGame{
 	private boolean game_end;
 
 	public UIGame(boolean Vs_AI, String difficulty, Game_Scene board) {
+
 		this.boardUI=board;
-		this.game_end=false;
 		this.boardUI.vsRobots=Vs_AI;
+		this.game_end=false;
+
 		switch (difficulty) {
 			case "EASY":
 				controller.setDifficulty(DifficultyLevel.EASY);
@@ -63,8 +65,6 @@ public class UIGame{
 			}
 
 	}
-
-
 	private void computer_turn() {
 		if (boardUI.againstRobots()&&controller.currentPlayer() != boardUI.getPlayerSelection()) {
 			Point2D computerMove = controller.evalMove();
