@@ -1,20 +1,31 @@
 package game;
 
 
+import java.awt.image.RenderedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
+
 import javafx.application.Application;
-
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
-
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
-
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
+import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
-
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class Othello extends Application{
 
@@ -34,6 +45,8 @@ public class Othello extends Application{
 	public static int window_height=800;
 	public static int window_width=800;
     private Game_Scene game_board;
+	private MenuBar menuBar;
+	private Menu menu;
 	public static  Scene game_scene;
 
 	//private MenuBar menuBar;
@@ -96,9 +109,37 @@ public class Othello extends Application{
 		game_scene=new Scene(game_board,window_width, window_height);
 
 
-
+		menuBar=new MenuBar();
+		menuBar.setTranslateX(0);
+		menuBar.setTranslateY(-390);
+		menu=new Menu("Click Me Please");
+		MenuItem fMenuItem[]= {new MenuItem("Save Picture")};
+		fMenuItem[0].setOnAction(e->{
+			FileChooser fileChooser=new FileChooser();
+			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG","*.png"));
+			saveImage(fileChooser);
+		});
+		fMenuItem[0].setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+		menu.getItems().addAll(fMenuItem);
+		menuBar.getMenus().addAll(menu);
+		
+		game_board.getChildren().addAll(menuBar);
 	}
+	public void saveImage(FileChooser fileChooser) {
+		File file=fileChooser.showSaveDialog(Othello.game_scene.getWindow());
+		if(file!=null) {
+			try {
+				SnapshotParameters sParameters=new SnapshotParameters();
+				sParameters.setFill(Color.TRANSPARENT);
+				WritableImage writableImage=new WritableImage((int)window_width,(int)window_height);
+				game_board.snapshot(sParameters, writableImage);
+				RenderedImage renderedImage=SwingFXUtils.fromFXImage(writableImage,null);
+				ImageIO.write(renderedImage, "png", file);
 
+			}
+			catch (Exception e) {}
+		}
+	}
 
 	@Override
     public void start(Stage primaryStage) throws Exception {
