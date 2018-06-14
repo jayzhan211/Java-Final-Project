@@ -41,9 +41,10 @@ public class Game_Scene extends StackPane{
     public int flip_duration=500;
     public MenuBar menuBar;
     public Menu menu;
-
-	public Game_Scene() {
+	public Game_Scene(String game) {
 		board_state=new BoardUI();
+		//System.out.println("111");
+		System.out.println(board_state.Ct);
 		Image image=new Image("/game/BGP.jpg",Othello.window_width,Othello.window_height,false, false, false);
 		ImageView bgp = new ImageView(image);
 		//bgp.setOpacity(0.5);
@@ -56,9 +57,9 @@ public class Game_Scene extends StackPane{
 		blackscore.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
 		blackscore.setTextFill(Color.BLACK);
 
-		showturn=new Label("BetaOthello");
+		showturn=new Label(game);
 		showturn.setFont(Font.font("Arial", FontWeight.BOLD, 35));
-		showturn.setTextFill(Color.BLACK);
+		showturn.setTextFill(Color.GOLD);
 
 
 
@@ -68,7 +69,7 @@ public class Game_Scene extends StackPane{
 		blackscore.setTranslateY(300);
 		showturn.setTranslateX(0);
 		showturn.setTranslateY(300);
-		
+
 		this.getChildren().addAll(board_state,whitescore,blackscore,showturn);
 		this.flipDuration=Duration.millis(flip_duration);
 
@@ -121,6 +122,9 @@ public class Game_Scene extends StackPane{
 	}
 	public void updateTurn(String player) {
 		this.showturn.setText(player);
+		if(player==Player.BLACK.toString())
+			this.showturn.setTextFill(Color.BLACK);
+		else this.showturn.setTextFill(Color.WHITE);
 	}
 	public Player getPlayerSelection() {
 		return human;
@@ -132,5 +136,5 @@ public class Game_Scene extends StackPane{
 		for (Point2D toFill : filledpoints)
 			setSquare(toFill, color);
 	}
-	
+
 }

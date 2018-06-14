@@ -37,7 +37,7 @@ public class UIGame{
 		for(int i=0;i<8;i++)
 			for(int j=0;j<8;j++) {
 				final int ii=i,jj=j;
-				boardUI.board_state.squares[i][j].setOnMouseClicked(e->{
+				this.boardUI.board_state.squares[i][j].setOnMouseClicked(e->{
 					if(game_end)return ;
 
 					if (!findPossibleMoves()) {
@@ -50,7 +50,7 @@ public class UIGame{
 						possblMoves = markPossibleMoves();
 						Point2D selectedMove=new Point2D(ii, jj);
 						if (possblMoves.contains(selectedMove)) {
-							boardUI.unmarkPossibleMoves(possblMoves);
+							this.boardUI.unmarkPossibleMoves(possblMoves);
 							makeMove(selectedMove);
 							updateStats();
 							changeTurn();

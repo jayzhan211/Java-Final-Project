@@ -3,6 +3,7 @@ package game;
 
 
 import javafx.geometry.Pos;
+
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -16,14 +17,12 @@ public class BoardUI extends GridPane{
 	protected Piece[][] board;
 	protected Duration flipDuration;
     protected int flip_duration=500;
-
+    public int Ct=0;
 	public BoardUI() {
 		super();
 		board=new Piece[8][8];
 		squares=new Pane[8][8];
 		this.flipDuration= Duration.millis(flip_duration);
-
-
 		for(int i=0;i<8;i++) {
 			getRowConstraints().add( new RowConstraints(Board_Size));
 			getColumnConstraints().add( new ColumnConstraints(Board_Size));
@@ -41,8 +40,18 @@ public class BoardUI extends GridPane{
 		board[4][4].setType(SquareType.WHITE);
 		board[3][4].setType(SquareType.BLACK);
 		board[4][3].setType(SquareType.BLACK);
+		/*for(int i=0;i<8;i++) {
+				for(int j=0;j<8;j++)
+					if(board[i][j].getType()==SquareType.WHITE)System.out.print("1");
+					else System.out.print("0");
+				System.out.println();
+		}
+		System.out.println();*/
+
 		setGridLinesVisible(true);
 		setAlignment(Pos.CENTER);
+
+
 	}
 
 }

@@ -53,8 +53,4 @@ public class NegaMax{
 				board.count(SquareState.BLACK) == 0||
 				board.count(SquareState.WHITE) == 0;
 	}
-	/* Negamax:
-		max(a,b)=-min(-b,-a)
-	*/
-	
 }

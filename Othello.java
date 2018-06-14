@@ -47,8 +47,9 @@ public class Othello extends Application{
     private Game_Scene game_board;
 	private MenuBar menuBar;
 	private Menu menu;
-	public static  Scene game_scene;
-
+	public  Scene game_scene;
+	Stage mainStage;
+	private Stage primaryStage;
 	//private MenuBar menuBar;
 
 	public void init() throws Exception {
@@ -105,28 +106,51 @@ public class Othello extends Application{
 		choose_pane.getChildren().addAll(return_button,PVP,PVC_Easy,PVC_Normal,PVC_Hard,PVC_Nightmare);
 		choose_scene=new Scene(choose_pane,window_width, window_height);
 
-		game_board=new Game_Scene();
-		game_scene=new Scene(game_board,window_width, window_height);
+		//game_board=new Game_Scene();
+		//game_scene=new Scene(game_board,window_width, window_height);
 
 
 		menuBar=new MenuBar();
 		menuBar.setTranslateX(0);
 		menuBar.setTranslateY(-390);
 		menu=new Menu("Click Me Please");
-		MenuItem fMenuItem[]= {new MenuItem("Save Picture")};
+		MenuItem fMenuItem[]= {
+				new MenuItem("Save Picture"),
+				new MenuItem("Restart PVP"),
+				new MenuItem("Restart EASY"),
+				new MenuItem("Restart Normal"),
+				new MenuItem("Restart Hard"),
+				new MenuItem("Restart Nightmare")
+		};
+
 		fMenuItem[0].setOnAction(e->{
 			FileChooser fileChooser=new FileChooser();
 			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG","*.png"));
 			saveImage(fileChooser);
 		});
 		fMenuItem[0].setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+		fMenuItem[1].setOnAction(e->{
+			startgame("PvP");
+		});
+		fMenuItem[2].setOnAction(e->{
+			startgame("Easy");
+		});
+		fMenuItem[3].setOnAction(e->{
+			startgame("Normal");
+		});
+		fMenuItem[4].setOnAction(e->{
+			startgame("Hard");
+		});
+		fMenuItem[5].setOnAction(e->{
+			startgame("Nightmare");
+		});
+
 		menu.getItems().addAll(fMenuItem);
 		menuBar.getMenus().addAll(menu);
-		
-		game_board.getChildren().addAll(menuBar);
+
 	}
 	public void saveImage(FileChooser fileChooser) {
-		File file=fileChooser.showSaveDialog(Othello.game_scene.getWindow());
+		File file=fileChooser.showSaveDialog(game_scene.getWindow());
 		if(file!=null) {
 			try {
 				SnapshotParameters sParameters=new SnapshotParameters();
@@ -140,9 +164,16 @@ public class Othello extends Application{
 			catch (Exception e) {}
 		}
 	}
-
+	private void startgame(String game) {
+		game_board = new Game_Scene(game);
+		game_board.getChildren().addAll(menuBar);
+    	game_scene=new Scene(game_board,window_width, window_height);
+    	new UIGame(game!="PvP", game,game_board);
+    	primaryStage.setScene(game_scene);
+	}
 	@Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage mainStage) throws Exception {
+		primaryStage = mainStage;
         primaryStage.setTitle("Othello");
         primaryStage.setScene(start_scene);
         primaryStage.setResizable(false);
@@ -150,36 +181,25 @@ public class Othello extends Application{
 
         startButton.setOnAction(e->{
         	primaryStage.setScene(choose_scene);
-
 		});
         return_button.setOnAction(e->{
         	primaryStage.setScene(start_scene);
-
 		});
         PVP.setOnAction(e->{
-        	new UIGame(false, "PVP",game_board);
-        	primaryStage.setScene(game_scene);
+        	startgame("PvP");
 		});
         PVC_Easy.setOnAction(e->{
-        	new UIGame(true, "Easy",game_board);
-        	primaryStage.setScene(game_scene);
-
+        	startgame("Easy");
 		});
         PVC_Normal.setOnAction(e->{
-        	new UIGame(true, "Normal",game_board);
-        	primaryStage.setScene(game_scene);
-
+        	startgame("Normal");
 		});
         PVC_Hard.setOnAction(e->{
-        	new UIGame(true, "Hard",game_board);
-        	primaryStage.setScene(game_scene);
-
+        	startgame("Hard");
 		});
 
         PVC_Nightmare.setOnAction(e->{
-        	new UIGame(true, "Nightmare",game_board);
-        	primaryStage.setScene(game_scene);
-
+        	startgame("Nightmare");
 		});
     }
 
