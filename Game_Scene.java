@@ -68,22 +68,9 @@ public class Game_Scene extends StackPane{
 		blackscore.setTranslateY(300);
 		showturn.setTranslateX(0);
 		showturn.setTranslateY(300);
-		menuBar=new MenuBar();
-		menuBar.setTranslateX(0);
-		menuBar.setTranslateY(-390);
-		this.getChildren().addAll(board_state,whitescore,blackscore,showturn,menuBar);
+		
+		this.getChildren().addAll(board_state,whitescore,blackscore,showturn);
 		this.flipDuration=Duration.millis(flip_duration);
-		menu=new Menu("Click Me Please");
-		MenuItem fMenuItem[]= {new MenuItem("Save Picture")};
-		fMenuItem[0].setOnAction(e->{
-			FileChooser fileChooser=new FileChooser();
-			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG","*.png"));
-			saveImage(fileChooser);
-		});
-		fMenuItem[0].setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
-		menu.getItems().addAll(fMenuItem);
-		menuBar.getMenus().addAll(menu);
-
 
 	}
 	public void updateScore(int blackscore, int whitescore) {
@@ -145,19 +132,5 @@ public class Game_Scene extends StackPane{
 		for (Point2D toFill : filledpoints)
 			setSquare(toFill, color);
 	}
-	public void saveImage(FileChooser fileChooser) {
-		File file=fileChooser.showSaveDialog(Othello.game_scene.getWindow());
-		if(file!=null) {
-			try {
-				SnapshotParameters sParameters=new SnapshotParameters();
-				sParameters.setFill(Color.TRANSPARENT);
-				WritableImage writableImage=new WritableImage((int)this.getWidth(),(int)this.getHeight());
-				this.snapshot(sParameters, writableImage);
-				RenderedImage renderedImage=SwingFXUtils.fromFXImage(writableImage,null);
-				ImageIO.write(renderedImage, "png", file);
-
-			}
-			catch (Exception e) {}
-		}
-	}
+	
 }
