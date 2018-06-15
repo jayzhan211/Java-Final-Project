@@ -1,36 +1,37 @@
 package game;
 
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javafx.geometry.Point2D;
-
 public class ScoreEval{
 
-	private Set<Point2D> corners;
-	private int weight;
-	private int tot_score;
+	private Board board;
+	private Player player;
+	//private final int alpha=10000; //score variable
+	public ScoreEval() {
 
-	public ScoreEval(int weight) {
-		this.weight = weight;
-		this.corners = new HashSet<Point2D>(4);
-		this.corners.add(new Point2D(0, 0));
-		this.corners.add(new Point2D(Board.BOARD_LENGTH, 0));
-		this.corners.add(new Point2D(0, Board.BOARD_WIDTH));
-		this.corners.add(new Point2D(Board.BOARD_LENGTH, Board.BOARD_WIDTH));
 	}
 
 	public int evaluate(Board board, Player player) {
-		int score = board.count(player.color());
-		for (Point2D p : corners) {
-			if (board.getSquareState(p) == player.color()) {
-				score += weight;
-			}
-		}
-		tot_score+=score;
-		tot_score+=board.count(player.color()) - board.count(player.opponent().color());
-		tot_score+=board.count(player.color());
-		return tot_score;
+		this.board=board;
+		this.player=player;
+
+		int score=0;
+		score+=mobility();
+		//score+=pieces();
+		score+=board.board_val(player);
+		return score;
+
 	}
+	public int mobility() {
+		int player_moves=board.getPossibleMovesCount(player);
+		int opponent_moves = board.getPossibleMovesCount(player.opponent());
+		return player_moves-opponent_moves;
+	}
+	/*public long pieces() {
+		return (board.count(player.color())-board.count(player.opponent().color()));
+
+	}*/
+
+
+
+
 }
