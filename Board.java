@@ -131,5 +131,11 @@ public final class Board{
 	public Board clone() {
 		return new Board(this.board);
 	}
-
+	public int getPiecescount() {
+		int cnt=0;
+		for (Point2D point : board.keySet())
+			if (board.get(point) == SquareState.WHITE||board.get(point) == SquareState.BLACK)
+				cnt++;
+		return cnt;
+	}
 }
