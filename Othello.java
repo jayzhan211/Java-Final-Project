@@ -3,9 +3,7 @@ package game;
 
 import java.awt.image.RenderedImage;
 import java.io.File;
-
 import javax.imageio.ImageIO;
-
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
@@ -25,7 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+
 
 public class Othello extends Application{
 
@@ -105,10 +103,6 @@ public class Othello extends Application{
 
 		choose_pane.getChildren().addAll(return_button,PVP,PVC_Easy,PVC_Normal,PVC_Hard,PVC_Nightmare);
 		choose_scene=new Scene(choose_pane,window_width, window_height);
-
-		//game_board=new Game_Scene();
-		//game_scene=new Scene(game_board,window_width, window_height);
-
 
 		menuBar=new MenuBar();
 		menuBar.setTranslateX(0);
