@@ -32,10 +32,21 @@ public class NegaMax{
 
 			}
 			else {
+				boolean first_child=true;
 				for (Point2D nextPossibleMove : possibleMoves) {
 					Board subBoard = board.clone();
 					subBoard.makeMove(nextPossibleMove, player.color());
-					int score = search(subBoard, player.opponent(), -beta, -alpha, depth - 1, evfunction).negated().getScore();
+					int score;
+					if(first_child) {
+						score = search(subBoard, player.opponent(), -beta, -alpha, depth - 1, evfunction).negated().getScore();
+						first_child=false;
+					}
+					else {
+						score = search(subBoard, player.opponent(), -alpha-1, -alpha, depth - 1, evfunction).negated().getScore();
+						if(alpha<score&&score<beta) {
+							score=search(subBoard, player.opponent(), -beta, score, depth - 1, evfunction).negated().getScore();
+						}
+					}
 					if (alpha < score) { //update the range
 						alpha = score;
 						best = new SearchResult(nextPossibleMove, score);
