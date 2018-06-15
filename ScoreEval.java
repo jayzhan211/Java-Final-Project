@@ -9,6 +9,11 @@ public class ScoreEval{
 
 	}
 	public int evaluate(Board board, Player player) {
+		int cnt=board.getPiecescount();
+		if(cnt<24||cnt>44) {
+			return board.board_val(player);
+		}
+
 		this.board=board;
 		this.player=player;
 
