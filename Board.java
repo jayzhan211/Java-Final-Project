@@ -4,15 +4,28 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
-
 import javafx.geometry.Point2D;
-
 public final class Board{
+	final int table[][]= {
+			{100, -5, 10,  5,  5, 10, -5,100},
 
+            { -5,-45,  1,  1,  1,  1,-45, -5},
+
+            { 10,  1,  3,  2,  2,  3,  1, 10},
+
+            {  5,  1,  2,  1,  1,  2,  1,  5},
+
+            {  5,  1,  2,  1,  1,  2,  1,  5},
+
+            { 10,  1,  3,  2,  2,  3,  1, 10},
+
+            { -5,-45,  1,  1,  1,  1,-45, -5},
+
+            {100, -5, 10,  5,  5, 10, -5,100}
+	};
 	public static final int BOARD_LENGTH = 8;
 	public static final int BOARD_WIDTH = 8;
 	private Map<Point2D, SquareState> board;
-
 	public Board() {
 		board = new HashMap<Point2D, SquareState>(BOARD_LENGTH * BOARD_WIDTH);
 		init();
@@ -72,10 +85,26 @@ public final class Board{
 		return MoveExplorer.explore(this, player.color());
 	}
 
+	public int getPossibleMovesCount(Player player) {
+		return getPossibleMoves(player).size();
+	}
 	public void markPossibleMoves(Set<Point2D> moves) {
 		for (Point2D point : moves) {
 			board.put(point, SquareState.PSSBL);
 		}
+	}
+	public int board_val(Player player) {
+		int cnt=0;
+		for (Point2D point : board.keySet()) {
+			if (board.get(point) == player.color()) {
+				cnt+=table[(int)point.getX()][(int)point.getY()];
+			}
+			else if (board.get(point) == player.opponent().color()) {
+				cnt-=table[(int)point.getX()][(int)point.getY()];
+			}
+
+		}
+		return cnt;
 	}
 
 	public void unmarkPossibleMoves() {
@@ -102,4 +131,5 @@ public final class Board{
 	public Board clone() {
 		return new Board(this.board);
 	}
+
 }
