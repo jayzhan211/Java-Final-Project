@@ -53,7 +53,7 @@ public class Othello extends Application{
 	public void init() throws Exception {
 		//First Scene
 		start_pane = new StackPane();
-		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/game/Start_Image.jpg")));
+		ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/game/start_img.jpg")));
 		start_pane.getChildren().add(image);
 
 		startButton = new Button("Othello");
