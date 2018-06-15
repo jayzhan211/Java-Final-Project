@@ -64,6 +64,7 @@ public class Game_Scene extends StackPane{
 	}
 	public void declareDraw() {
 		showturn.setText("Draw !?");
+		showturn.setTextFill(Color.rgb(0,128,255));
 	}
 	public void declareWinner(String winnerName) {
 		showturn.setText(winnerName + " WINS!!!");
