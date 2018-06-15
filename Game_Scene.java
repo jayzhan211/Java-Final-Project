@@ -1,33 +1,20 @@
 package game;
 
-import java.awt.image.RenderedImage;
-import java.io.File;
 import java.util.Collection;
-
-import javax.imageio.ImageIO;
-
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Point2D;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Rotate;
-import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
 public class Game_Scene extends StackPane{
@@ -43,11 +30,8 @@ public class Game_Scene extends StackPane{
     public Menu menu;
 	public Game_Scene(String game) {
 		board_state=new BoardUI();
-		//System.out.println("111");
-		System.out.println(board_state.Ct);
 		Image image=new Image("/game/BGP.jpg",Othello.window_width,Othello.window_height,false, false, false);
 		ImageView bgp = new ImageView(image);
-		//bgp.setOpacity(0.5);
 		this.getChildren().addAll(bgp);
 
 		whitescore=new Label("White");
@@ -82,8 +66,12 @@ public class Game_Scene extends StackPane{
 		showturn.setText("Draw !?");
 	}
 	public void declareWinner(String winnerName) {
-		showturn.setText(winnerName + " has win the game!!!");
-		showturn.setFont(new Font("Allerta Stencil",35));
+		showturn.setText(winnerName + " WINS!!!");
+		if(winnerName==Player.BLACK.toString())
+			this.showturn.setTextFill(Color.BLACK);
+		else this.showturn.setTextFill(Color.WHITE);
+		blackscore.setVisible(false);
+		whitescore.setVisible(false);
 	}
 	public void markPossibleMoves(Collection<Point2D> possibleMoves, SquareType color) {
 		for (Point2D possiblePoint : possibleMoves)
